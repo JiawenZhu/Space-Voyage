@@ -1,6 +1,6 @@
 {
-  "name": "Planet Jumping",
-  "description": "Single-page immersive space portal experience with a canvas-driven 3D portal and video preloader sequence.",
+  "name": "Space Voyage",
+  "description": "Warp between the planets of the inner Solar System through an interactive portal.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }
