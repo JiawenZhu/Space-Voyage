@@ -1,0 +1,1468 @@
+{
+ "beijing": {
+  "center": [
+   39.90421,
+   116.40739
+  ],
+  "places": [
+   {
+    "id": "ChIJPdQVRelS8DURnwfTTb3idAY",
+    "name": "Forbidden City",
+    "lat": 39.916804,
+    "lng": 116.397162
+   },
+   {
+    "id": "ChIJ65H_GWBN8DURag4RO0UVLDc",
+    "name": "Temple of Heaven",
+    "lat": 39.88218,
+    "lng": 116.406606
+   },
+   {
+    "id": "ChIJP4_Ducf4AjQRMqEETHex2UU",
+    "name": "Summer Palace",
+    "lat": 39.999982,
+    "lng": 116.275461
+   },
+   {
+    "id": "ChIJKS2Kiggl8TURmHgLveqgKgQ",
+    "name": "Great Wall at Mutianyu",
+    "lat": 40.432683,
+    "lng": 116.564006
+   }
+  ]
+ },
+ "xian": {
+  "center": [
+   34.26581,
+   108.95409
+  ],
+  "places": [
+   {
+    "id": "ChIJowMUgi2nZDYRxz_j6XQ-48M",
+    "name": "Terracotta Army",
+    "lat": 34.384115,
+    "lng": 109.278492
+   },
+   {
+    "id": "ChIJy1ZYY4h6YzYRf4mj9gc0m58",
+    "name": "Xi’an City Wall",
+    "lat": 34.252045,
+    "lng": 108.952833
+   },
+   {
+    "id": "ChIJAQDwCGF6YzYR4Tnyo8XeelI",
+    "name": "Bell Tower of Xi'an",
+    "lat": 34.259467,
+    "lng": 108.94702
+   },
+   {
+    "id": "ChIJ2Z1H3-c24BQRane6QKG7BEg",
+    "name": "Big Wild Goose Pagoda",
+    "lat": 34.218243,
+    "lng": 108.964152
+   }
+  ]
+ },
+ "shanghai": {
+  "center": [
+   31.23042,
+   121.4737
+  ],
+  "places": [
+   {
+    "id": "ChIJYUiHi1dwsjURZK_REO37Vk0",
+    "name": "The Bund",
+    "lat": 31.240261,
+    "lng": 121.490577
+   },
+   {
+    "id": "ChIJcT52JmpwsjURKKp8uyIQKjU",
+    "name": "Shanghai Tower",
+    "lat": 31.233518,
+    "lng": 121.505618
+   },
+   {
+    "id": "ChIJidPZMUGHrTUR29eIuHbpoIQ",
+    "name": "Yu Garden",
+    "lat": 31.227236,
+    "lng": 121.492094
+   },
+   {
+    "id": "ChIJF0iL_KF6sjURjQpUzO-LXaM",
+    "name": "Tianzifang",
+    "lat": 31.208257,
+    "lng": 121.468113
+   }
+  ]
+ },
+ "chongqing": {
+  "center": [
+   29.56568,
+   106.55118
+  ],
+  "places": [
+   {
+    "id": "ChIJmahOdYE0kzYRdS8vX21M4go",
+    "name": "Hongyadong",
+    "lat": 29.561976,
+    "lng": 106.577535
+   },
+   {
+    "id": "ChIJ0xGJvrQ0kzYRST6Mr6HT5kc",
+    "name": "Liziba Station",
+    "lat": 29.552912,
+    "lng": 106.537744
+   },
+   {
+    "id": "ChIJETuQ7300kzYR95vE7yxNBzE",
+    "name": "Yangtze River Cableway",
+    "lat": 29.557701,
+    "lng": 106.582752
+   },
+   {
+    "id": "ChIJMd5HaYc0kzYRIG60GsPzgB0",
+    "name": "Jiefangbei",
+    "lat": 29.55712,
+    "lng": 106.58088
+   }
+  ]
+ },
+ "shenzhen": {
+  "center": [
+   22.54286,
+   114.05956
+  ],
+  "places": [
+   {
+    "id": "ChIJOVyDsTf0AzQRzvEq8KnAEqM",
+    "name": "Huaqiangbei",
+    "lat": 22.545189,
+    "lng": 114.096619
+   },
+   {
+    "id": "ChIJi0UD3ynuAzQRV7aPERonYhM",
+    "name": "Shenzhen Bay Park",
+    "lat": 22.506537,
+    "lng": 113.95348
+   },
+   {
+    "id": "ChIJJ3j98wP0AzQR28UgKk6eSa0",
+    "name": "Ping An Finance Center",
+    "lat": 22.533096,
+    "lng": 114.055865
+   },
+   {
+    "id": "ChIJy2re90yQAzQR6QtAWXaVC34",
+    "name": "OCT Loft",
+    "lat": 22.537294,
+    "lng": 113.991931
+   }
+  ]
+ },
+ "chengdu": {
+  "center": [
+   30.57226,
+   104.06651
+  ],
+  "places": [
+   {
+    "id": "ChIJ8VuaD-DQ7zYRd5EYh3BjzdM",
+    "name": "Chengdu Research Base of Giant Panda Breeding",
+    "lat": 30.732969,
+    "lng": 104.14581
+   },
+   {
+    "id": "ChIJc031OtjE7zYRi36M4xv3K8U",
+    "name": "Kuanzhai Alley",
+    "lat": 30.66421,
+    "lng": 104.05159
+   },
+   {
+    "id": "ChIJIT0ZCOPE7zYR30Zs5J35lxY",
+    "name": "Jinli Ancient Street",
+    "lat": 30.644859,
+    "lng": 104.049974
+   },
+   {
+    "id": "ChIJvTWARcva7zYRPk9kGPy5G1E",
+    "name": "Wenshu Monastery",
+    "lat": 30.674771,
+    "lng": 104.071948
+   }
+  ]
+ },
+ "suzhou": {
+  "center": [
+   31.29834,
+   120.58319
+  ],
+  "places": [
+   {
+    "id": "ChIJ95Kf4M-mszUREZWApzl39cg",
+    "name": "Humble Administrator's Garden",
+    "lat": 31.324224,
+    "lng": 120.62997
+   },
+   {
+    "id": "ChIJ9QCvWeagszURmzdDoPCfRw4",
+    "name": "Lingering Garden",
+    "lat": 31.315707,
+    "lng": 120.59257
+   },
+   {
+    "id": "ChIJO0cSBCenszURHGKud5-nq4Y",
+    "name": "Pingjiang Road",
+    "lat": 31.309589,
+    "lng": 120.634804
+   },
+   {
+    "id": "ChIJzR7WJgShszURNYYYQF05jFk",
+    "name": "Tiger Hill",
+    "lat": 31.33373,
+    "lng": 120.579912
+   }
+  ]
+ },
+ "guilin": {
+  "center": [
+   25.27361,
+   110.29002
+  ],
+  "places": [
+   {
+    "id": "ChIJBx8lic71pDYRDs9lO3l8Q0w",
+    "name": "Elephant Trunk Hill",
+    "lat": 25.266947,
+    "lng": 110.293263
+   },
+   {
+    "id": "ChIJs8zoz1f0pDYRWhx3YnA2xV0",
+    "name": "Reed Flute Cave",
+    "lat": 25.304409,
+    "lng": 110.273614
+   },
+   {
+    "id": "ChIJu7rqEX6lpTYRBFGsPFUDHEk",
+    "name": "Yangshuo West Street",
+    "lat": 24.77621,
+    "lng": 110.479
+   },
+   {
+    "id": "ChIJBcA-D9FiozYRBSX7t28ZKj0",
+    "name": "Longji Rice Terraces",
+    "lat": 25.77043,
+    "lng": 110.13218
+   }
+  ]
+ },
+ "new-york": {
+  "center": [
+   40.71278,
+   -74.00597
+  ],
+  "places": [
+   {
+    "id": "ChIJ6XWMiRn2wokROZOJYqrTD4k",
+    "name": "Central Park",
+    "lat": 40.798777,
+    "lng": -73.95372
+   },
+   {
+    "id": "ChIJPTacEpBQwokRKwIlDXelxkA",
+    "name": "Statue of Liberty",
+    "lat": 40.689249,
+    "lng": -74.0445
+   },
+   {
+    "id": "ChIJaXQRs6lZwokRY6EFpJnhNNE",
+    "name": "Empire State Building",
+    "lat": 40.748441,
+    "lng": -73.985664
+   },
+   {
+    "id": "ChIJb8Jg9pZYwokR-qHGtvSkLzs",
+    "name": "The Metropolitan Museum of Art",
+    "lat": 40.779437,
+    "lng": -73.963244
+   }
+  ]
+ },
+ "orlando": {
+  "center": [
+   28.53838,
+   -81.37893
+  ],
+  "places": [
+   {
+    "id": "ChIJgUulalN-3YgRGoTaWM2LawY",
+    "name": "Magic Kingdom Park",
+    "lat": 28.418816,
+    "lng": -81.581769
+   },
+   {
+    "id": "ChIJdd8VlMN-54gRoaU0d_zYhfk",
+    "name": "Universal Studios Florida",
+    "lat": 28.479375,
+    "lng": -81.468542
+   },
+   {
+    "id": "ChIJu3hNU-N654gR0x0I9_3iNvc",
+    "name": "Lake Eola Park",
+    "lat": 28.542763,
+    "lng": -81.370929
+   },
+   {
+    "id": "ChIJiTHKxDOu4IgRgAU6btoqIsU",
+    "name": "Kennedy Space Center Visitor Complex",
+    "lat": 28.521897,
+    "lng": -80.681541
+   }
+  ]
+ },
+ "chicago": {
+  "center": [
+   41.88325,
+   -87.63239
+  ],
+  "places": [
+   {
+    "id": "ChIJ9Sszh6YsDogRUUo6zu8_TQY",
+    "name": "Cloud Gate",
+    "lat": 41.882657,
+    "lng": -87.623304
+   },
+   {
+    "id": "ChIJlUbZ4qMsDogR3tCinMzzKUg",
+    "name": "Art Institute of Chicago",
+    "lat": 41.879603,
+    "lng": -87.62235
+   },
+   {
+    "id": "ChIJ2y7xkU0rDogR3KSIsJbbrNA",
+    "name": "Navy Pier",
+    "lat": 41.891863,
+    "lng": -87.605094
+   },
+   {
+    "id": "ChIJXWmIuKMsDogRU9zDFF0QQ5M",
+    "name": "Chicago Architecture Center",
+    "lat": 41.888014,
+    "lng": -87.623547
+   }
+  ]
+ },
+ "new-orleans": {
+  "center": [
+   29.95089,
+   -90.07584
+  ],
+  "places": [
+   {
+    "id": "ChIJaS5FoBGmIIYRj77fFz8J_94",
+    "name": "Jackson Square",
+    "lat": 29.957402,
+    "lng": -90.06295
+   },
+   {
+    "id": "ChIJh4KdlbyoIIYR4WbWAgc52bs",
+    "name": "Frenchmen Street",
+    "lat": 29.964151,
+    "lng": -90.057807
+   },
+   {
+    "id": "ChIJTT5Hm-ClIIYR97Y1jn7-aA0",
+    "name": "Café du Monde",
+    "lat": 29.957604,
+    "lng": -90.061769
+   },
+   {
+    "id": "ChIJE_FcQs2lIIYR7XRaRRcx61k",
+    "name": "Garden District",
+    "lat": 29.928844,
+    "lng": -90.085366
+   }
+  ]
+ },
+ "san-francisco": {
+  "center": [
+   37.77493,
+   -122.41942
+  ],
+  "places": [
+   {
+    "id": "ChIJw____96GhYARCVVwg5cT7c0",
+    "name": "Golden Gate Bridge",
+    "lat": 37.819911,
+    "lng": -122.47856
+   },
+   {
+    "id": "ChIJmRyMs_mAhYARpViaf6JEWNE",
+    "name": "Alcatraz Island",
+    "lat": 37.826977,
+    "lng": -122.422956
+   },
+   {
+    "id": "ChIJuX92JKWAhYARxVmeb8DQIYQ",
+    "name": "Painted Ladies",
+    "lat": 37.776253,
+    "lng": -122.432756
+   },
+   {
+    "id": "ChIJl62Bq92AhYARrLLC3ZcLL8Q",
+    "name": "Lombard Street",
+    "lat": 37.802018,
+    "lng": -122.419558
+   }
+  ]
+ },
+ "washington": {
+  "center": [
+   38.90729,
+   -77.03693
+  ],
+  "places": [
+   {
+    "id": "ChIJh2KQ4HG3t4kRti5cycnRSRA",
+    "name": "Lincoln Memorial",
+    "lat": 38.889269,
+    "lng": -77.050176
+   },
+   {
+    "id": "ChIJF8-iISm4t4kRxPgMwfejggQ",
+    "name": "United States Capitol",
+    "lat": 38.889939,
+    "lng": -77.009051
+   },
+   {
+    "id": "ChIJISQme4O3t4kRG-iM3TfJ5_g",
+    "name": "National Air and Space Museum",
+    "lat": 38.888206,
+    "lng": -77.019816
+   },
+   {
+    "id": "ChIJfy4MvqG3t4kRuL_QjoJGc-k",
+    "name": "Washington Monument",
+    "lat": 38.889484,
+    "lng": -77.035279
+   }
+  ]
+ },
+ "nashville": {
+  "center": [
+   36.16266,
+   -86.7816
+  ],
+  "places": [
+   {
+    "id": "ChIJletJO1lmZIgRq0UiSZV5AGM",
+    "name": "Ryman Auditorium",
+    "lat": 36.161248,
+    "lng": -86.778471
+   },
+   {
+    "id": "ChIJVSpg989pZIgRdex84bjnfic",
+    "name": "Grand Ole Opry",
+    "lat": 36.206857,
+    "lng": -86.692108
+   },
+   {
+    "id": "ChIJS2U0MVxmZIgRZw7MYMgQuKU",
+    "name": "Country Music Hall of Fame and Museum",
+    "lat": 36.158263,
+    "lng": -86.776126
+   },
+   {
+    "id": "ChIJ2zB-Kl9mZIgRShZIF1Cxp0M",
+    "name": "Lower Broadway",
+    "lat": 36.156451,
+    "lng": -86.787803
+   }
+  ]
+ },
+ "las-vegas": {
+  "center": [
+   36.17156,
+   -115.1391
+  ],
+  "places": [
+   {
+    "id": "ChIJswuaqjrEyIAR1vBx3GxKR-I",
+    "name": "Fountains of Bellagio",
+    "lat": 36.112719,
+    "lng": -115.173911
+   },
+   {
+    "id": "ChIJe64G4Z_DyIARNFDM0lNK7xk",
+    "name": "Fremont Street Experience",
+    "lat": 36.170727,
+    "lng": -115.143823
+   },
+   {
+    "id": "ChIJO2gyiTTRyIARCZO92id6AkI",
+    "name": "Welcome to Fabulous Las Vegas Sign",
+    "lat": 36.082073,
+    "lng": -115.172779
+   },
+   {
+    "id": "ChIJNYWglQe9yIARTLL8Kh3YznQ",
+    "name": "Red Rock Canyon National Conservation Area",
+    "lat": 36.194427,
+    "lng": -115.438297
+   }
+  ]
+ },
+ "tokyo": {
+  "center": [
+   35.67642,
+   139.65003
+  ],
+  "places": [
+   {
+    "id": "ChIJK9EM68qLGGARacmu4KJj5SA",
+    "name": "Shibuya Scramble Crossing",
+    "lat": 35.659482,
+    "lng": 139.70056
+   },
+   {
+    "id": "ChIJ8T1GpMGOGGARDYGSgpooDWw",
+    "name": "Senso-ji",
+    "lat": 35.714765,
+    "lng": 139.796655
+   },
+   {
+    "id": "ChIJ5SZMmreMGGARcz8QSTiJyo8",
+    "name": "Meiji Jingu",
+    "lat": 35.676398,
+    "lng": 139.699326
+   },
+   {
+    "id": "ChIJ35ov0dCOGGARKvdDH7NPHX0",
+    "name": "Tokyo Skytree",
+    "lat": 35.710063,
+    "lng": 139.8107
+   }
+  ]
+ },
+ "kyoto": {
+  "center": [
+   35.01156,
+   135.76815
+  ],
+  "places": [
+   {
+    "id": "ChIJIW0uPRUPAWAR6eI6dRzKGns",
+    "name": "Fushimi Inari Taisha",
+    "lat": 34.967695,
+    "lng": 135.779188
+   },
+   {
+    "id": "ChIJvUbrwCCoAWARX2QiHCsn5A4",
+    "name": "Kinkaku-ji",
+    "lat": 35.03937,
+    "lng": 135.729243
+   },
+   {
+    "id": "ChIJB_vchdMIAWARujTEUIZlr2I",
+    "name": "Kiyomizu-dera",
+    "lat": 34.994666,
+    "lng": 135.784661
+   },
+   {
+    "id": "ChIJrYtcv-urAWAR3XzWvXv8n_s",
+    "name": "Arashiyama Bamboo Grove",
+    "lat": 35.016819,
+    "lng": 135.671301
+   }
+  ]
+ },
+ "osaka": {
+  "center": [
+   34.69525,
+   135.50121
+  ],
+  "places": [
+   {
+    "id": "ChIJg2DcJhXnAGARCbeAHoZrPeQ",
+    "name": "Dotonbori",
+    "lat": 34.668647,
+    "lng": 135.503098
+   },
+   {
+    "id": "ChIJ_TooXM3gAGARQR6hXH3QAQ8",
+    "name": "Osaka Castle",
+    "lat": 34.687257,
+    "lng": 135.525855
+   },
+   {
+    "id": "ChIJV6JXdmDnAGAR-9a4atjXsTY",
+    "name": "Shinsekai",
+    "lat": 34.651601,
+    "lng": 135.505956
+   },
+   {
+    "id": "ChIJXeLVg9DgAGARqlIyMCX-BTY",
+    "name": "Universal Studios Japan",
+    "lat": 34.665677,
+    "lng": 135.432319
+   }
+  ]
+ },
+ "nara": {
+  "center": [
+   34.68511,
+   135.8048
+  ],
+  "places": [
+   {
+    "id": "ChIJ3XYIepA5AWARjzzVnT-skPg",
+    "name": "Todai-ji",
+    "lat": 34.688985,
+    "lng": 135.839816
+   },
+   {
+    "id": "ChIJYWCMvZY5AWARVnREV_OsbPk",
+    "name": "Nara Park",
+    "lat": 34.685047,
+    "lng": 135.843012
+   },
+   {
+    "id": "ChIJ1Wqwa8A5AWARlpXjgoPnl0w",
+    "name": "Kasuga Taisha",
+    "lat": 34.681545,
+    "lng": 135.848472
+   }
+  ]
+ },
+ "seoul": {
+  "center": [
+   37.55026,
+   126.99708
+  ],
+  "places": [
+   {
+    "id": "ChIJod7tSseifDUR9hXHLFNGMIs",
+    "name": "Gyeongbokgung Palace",
+    "lat": 37.579617,
+    "lng": 126.977041
+   },
+   {
+    "id": "ChIJT8H4r9qifDURmuXJ_6m6vM0",
+    "name": "Bukchon Hanok Village",
+    "lat": 37.58147,
+    "lng": 126.984952
+   },
+   {
+    "id": "ChIJqxQ_G_GifDURDI7jheBrQzs",
+    "name": "Myeongdong",
+    "lat": 37.55998,
+    "lng": 126.98583
+   },
+   {
+    "id": "ChIJqWqOqFeifDURpYJ5LnxX-Fw",
+    "name": "N Seoul Tower",
+    "lat": 37.551169,
+    "lng": 126.988227
+   }
+  ]
+ },
+ "busan": {
+  "center": [
+   35.17311,
+   129.07141
+  ],
+  "places": [
+   {
+    "id": "ChIJXwf-DlyNaDURmKxjwdWxY5k",
+    "name": "Haeundae Beach",
+    "lat": 35.158697,
+    "lng": 129.160384
+   },
+   {
+    "id": "ChIJUToRo7fpaDURo_ZMItcBfpc",
+    "name": "Gamcheon Culture Village",
+    "lat": 35.097393,
+    "lng": 129.010592
+   },
+   {
+    "id": "ChIJwabeuxuMaDURXC4Rb21AQaE",
+    "name": "Haedong Yonggungsa Temple",
+    "lat": 35.188454,
+    "lng": 129.223111
+   },
+   {
+    "id": "ChIJudkrFArpaDURbbCzajeQs0c",
+    "name": "Jagalchi Fish Market",
+    "lat": 35.096634,
+    "lng": 129.030797
+   }
+  ]
+ },
+ "singapore": {
+  "center": [
+   1.35208,
+   103.81984
+  ],
+  "places": [
+   {
+    "id": "ChIJA5LATO4Z2jER111V-v6abAI",
+    "name": "Marina Bay Sands",
+    "lat": 1.283757,
+    "lng": 103.859106
+   },
+   {
+    "id": "ChIJMxZ-kwQZ2jERdsqftXeWCWI",
+    "name": "Gardens by the Bay",
+    "lat": 1.281568,
+    "lng": 103.863613
+   },
+   {
+    "id": "ChIJBTYg1g4Z2jERp_MBbu5erWY",
+    "name": "Merlion Park",
+    "lat": 1.286745,
+    "lng": 103.854387
+   },
+   {
+    "id": "ChIJ42h1onIZ2jERBbs-VGqmwrs",
+    "name": "Chinatown Singapore",
+    "lat": 1.281494,
+    "lng": 103.84482
+   }
+  ]
+ },
+ "bangkok": {
+  "center": [
+   13.75633,
+   100.50177
+  ],
+  "places": [
+   {
+    "id": "ChIJPzZsMU6Z4jARQUzvk913bCo",
+    "name": "The Grand Palace",
+    "lat": 13.749856,
+    "lng": 100.491576
+   },
+   {
+    "id": "ChIJgcxFcQWZ4jARLsIR9Qia9H0",
+    "name": "Wat Pho",
+    "lat": 13.746424,
+    "lng": 100.492773
+   },
+   {
+    "id": "ChIJaSv_6gaZ4jARnbiUVn6Z_YY",
+    "name": "Wat Arun",
+    "lat": 13.743865,
+    "lng": 100.488444
+   },
+   {
+    "id": "ChIJ3fiD6BSc4jARS324hNeR8ZE",
+    "name": "Chatuchak Weekend Market",
+    "lat": 13.799781,
+    "lng": 100.550424
+   }
+  ]
+ },
+ "chiang-mai": {
+  "center": [
+   18.78834,
+   98.9853
+  ],
+  "places": [
+   {
+    "id": "ChIJtd3x37U52jARIX7FrlxMhp0",
+    "name": "Wat Phra That Doi Suthep",
+    "lat": 18.804989,
+    "lng": 98.921634
+   },
+   {
+    "id": "ChIJFRQRM5k62jARuqhLBJpw91w",
+    "name": "Wat Chedi Luang",
+    "lat": 18.786969,
+    "lng": 98.98658
+   },
+   {
+    "id": "ChIJdcghNKI62jAR9iY55KuPO50",
+    "name": "Tha Phae Gate",
+    "lat": 18.787805,
+    "lng": 98.993368
+   },
+   {
+    "id": "ChIJcw-RKNA72jARFqCee_2Hr7E",
+    "name": "Chiang Mai Sunday Walking Street",
+    "lat": 18.788333,
+    "lng": 98.985293
+   }
+  ]
+ },
+ "hanoi": {
+  "center": [
+   21.02776,
+   105.83416
+  ],
+  "places": [
+   {
+    "id": "ChIJlclXM5WrNTERDqL5tGu_ugE",
+    "name": "Hoan Kiem Lake",
+    "lat": 21.028667,
+    "lng": 105.852148
+   },
+   {
+    "id": "ChIJZ73nJpmrNTERHt_VdIgHDlg",
+    "name": "Temple of Literature",
+    "lat": 21.028118,
+    "lng": 105.835669
+   },
+   {
+    "id": "ChIJ437seY-rNTERCkf4Ffj7dWs",
+    "name": "Hanoi Train Street",
+    "lat": 21.017752,
+    "lng": 105.840882
+   },
+   {
+    "id": "ChIJ95W4Ib-rNTERpMcyh8TGG2Q",
+    "name": "Hanoi Old Quarter",
+    "lat": 21.035266,
+    "lng": 105.850012
+   }
+  ]
+ },
+ "kuala-lumpur": {
+  "center": [
+   3.13192,
+   101.68406
+  ],
+  "places": [
+   {
+    "id": "ChIJH5xmLdE3zDERVpCKfNH9Op4",
+    "name": "Petronas Twin Towers",
+    "lat": 3.157469,
+    "lng": 101.711564
+   },
+   {
+    "id": "ChIJBahJiQxHzDER-Z5vs7Lrv_I",
+    "name": "Batu Caves",
+    "lat": 3.237884,
+    "lng": 101.684038
+   },
+   {
+    "id": "ChIJORWImM1JzDERWTN2vAb5CzQ",
+    "name": "Merdeka Square",
+    "lat": 3.149061,
+    "lng": 101.693659
+   },
+   {
+    "id": "ChIJ-bu2kyk2zDERPz1s89JJHrU",
+    "name": "Jalan Alor",
+    "lat": 3.14592,
+    "lng": 101.708973
+   }
+  ]
+ },
+ "siem-reap": {
+  "center": [
+   13.36325,
+   103.8564
+  ],
+  "places": [
+   {
+    "id": "ChIJLSea6ooWEDERjUGwVxGoqz4",
+    "name": "Angkor Wat",
+    "lat": 13.412469,
+    "lng": 103.866986
+   },
+   {
+    "id": "ChIJlTryri4UEDERY52x4bXHVqk",
+    "name": "Bayon Temple",
+    "lat": 13.441283,
+    "lng": 103.858904
+   },
+   {
+    "id": "ChIJ36Upst8VEDERHgViL55Fuc8",
+    "name": "Ta Prohm",
+    "lat": 13.434794,
+    "lng": 103.889304
+   },
+   {
+    "id": "ChIJ9Vw0ZWUXEDER6lQnAxPmNIs",
+    "name": "Pub Street",
+    "lat": 13.354805,
+    "lng": 103.854735
+   }
+  ]
+ },
+ "paris": {
+  "center": [
+   48.85755,
+   2.35138
+  ],
+  "places": [
+   {
+    "id": "ChIJLU7jZClu5kcR4PcOOO6p3I0",
+    "name": "Eiffel Tower",
+    "lat": 48.85837,
+    "lng": 2.294481
+   },
+   {
+    "id": "ChIJD3uTd9hx5kcR1IQvGfr8dbk",
+    "name": "Louvre Museum",
+    "lat": 48.860611,
+    "lng": 2.337644
+   },
+   {
+    "id": "ChIJATr1n-Fx5kcRjQb6q6cdQDY",
+    "name": "Notre-Dame de Paris",
+    "lat": 48.852968,
+    "lng": 2.349902
+   },
+   {
+    "id": "ChIJ442GNENu5kcRGYUrvgqHw88",
+    "name": "Sacré-Cœur Basilica",
+    "lat": 48.886705,
+    "lng": 2.343104
+   }
+  ]
+ },
+ "london": {
+  "center": [
+   51.50722,
+   -0.12759
+  ],
+  "places": [
+   {
+    "id": "ChIJSdtli0MDdkgRLW9aCBpCeJ4",
+    "name": "Tower Bridge",
+    "lat": 51.505456,
+    "lng": -0.075356
+   },
+   {
+    "id": "ChIJ2dGMjMMEdkgRqVqkuXQkj7c",
+    "name": "Big Ben",
+    "lat": 51.500729,
+    "lng": -0.124625
+   },
+   {
+    "id": "ChIJB9OTMDIbdkgRp0JWbQGZsS8",
+    "name": "British Museum",
+    "lat": 51.519413,
+    "lng": -0.126957
+   },
+   {
+    "id": "ChIJD2bPdVcDdkgRuUSgnOXnKDE",
+    "name": "Borough Market",
+    "lat": 51.505583,
+    "lng": -0.090481
+   }
+  ]
+ },
+ "rome": {
+  "center": [
+   41.89671,
+   12.4822
+  ],
+  "places": [
+   {
+    "id": "ChIJrRMgU7ZhLxMRxAOFkC7I8Sg",
+    "name": "Colosseum",
+    "lat": 41.89021,
+    "lng": 12.492231
+   },
+   {
+    "id": "ChIJKcGbg2NgLxMRthZkUqDs4M8",
+    "name": "Vatican Museums",
+    "lat": 41.906488,
+    "lng": 12.453641
+   },
+   {
+    "id": "ChIJqUCGZ09gLxMRLM42IPpl0co",
+    "name": "Pantheon",
+    "lat": 41.898611,
+    "lng": 12.476873
+   },
+   {
+    "id": "ChIJ1UCDJ1NgLxMRtrsCzOHxdvY",
+    "name": "Trevi Fountain",
+    "lat": 41.900932,
+    "lng": 12.483313
+   }
+  ]
+ },
+ "barcelona": {
+  "center": [
+   41.38744,
+   2.16865
+  ],
+  "places": [
+   {
+    "id": "ChIJk_s92NyipBIRUMnDG8Kq2Js",
+    "name": "Sagrada Família",
+    "lat": 41.40363,
+    "lng": 2.174356
+   },
+   {
+    "id": "ChIJq0HUUq6ipBIRWM6qGqALmok",
+    "name": "Park Güell",
+    "lat": 41.414495,
+    "lng": 2.152694
+   },
+   {
+    "id": "ChIJYUFLSe2ipBIRD04uni940kA",
+    "name": "Casa Batlló",
+    "lat": 41.3917,
+    "lng": 2.164918
+   },
+   {
+    "id": "ChIJgQYekPiipBIRr6fNOMV-5bc",
+    "name": "Gothic Quarter",
+    "lat": 41.381925,
+    "lng": 2.177305
+   }
+  ]
+ },
+ "amsterdam": {
+  "center": [
+   52.36757,
+   4.90414
+  ],
+  "places": [
+   {
+    "id": "ChIJ5Ra7we4JxkcRhYVAaq5zQ9U",
+    "name": "Rijksmuseum",
+    "lat": 52.359998,
+    "lng": 4.885219
+   },
+   {
+    "id": "ChIJX1rTlu8JxkcRGsV8-a4oKMI",
+    "name": "Van Gogh Museum",
+    "lat": 52.358076,
+    "lng": 4.881205
+   },
+   {
+    "id": "ChIJSRE-IcUJxkcRCltjPmVdmtQ",
+    "name": "Anne Frank House",
+    "lat": 52.375218,
+    "lng": 4.883977
+   },
+   {
+    "id": "ChIJz3y0xeIJxkcRNcogBVV41Gw",
+    "name": "Vondelpark",
+    "lat": 52.357995,
+    "lng": 4.868648
+   }
+  ]
+ },
+ "prague": {
+  "center": [
+   50.07554,
+   14.4378
+  ],
+  "places": [
+   {
+    "id": "ChIJn7WO5eWUC0cRJrHT0TiXIHU",
+    "name": "Charles Bridge",
+    "lat": 50.086477,
+    "lng": 14.411437
+   },
+   {
+    "id": "ChIJw7ckbB6VC0cRnyUSr4g8zyo",
+    "name": "Prague Castle",
+    "lat": 50.091097,
+    "lng": 14.401616
+   },
+   {
+    "id": "ChIJF6gfPumUC0cRNxOlactBiAU",
+    "name": "Old Town Square",
+    "lat": 50.087468,
+    "lng": 14.420756
+   },
+   {
+    "id": "ChIJSS_AOemUC0cRlgaiWrJEe_E",
+    "name": "Prague Astronomical Clock",
+    "lat": 50.087021,
+    "lng": 14.420707
+   }
+  ]
+ },
+ "rio-de-janeiro": {
+  "center": [
+   -22.90685,
+   -43.1729
+  ],
+  "places": [
+   {
+    "id": "ChIJP6FKmNV_mQAR3gKVAdeEyZ0",
+    "name": "Christ the Redeemer",
+    "lat": -22.951916,
+    "lng": -43.210487
+   },
+   {
+    "id": "ChIJRfg5kECAmQARjLS837zXdYA",
+    "name": "Sugarloaf Mountain",
+    "lat": -22.949259,
+    "lng": -43.154576
+   },
+   {
+    "id": "ChIJa5WleUXVmwAR47P8r-4tEAo",
+    "name": "Copacabana Beach",
+    "lat": -22.973873,
+    "lng": -43.18531
+   },
+   {
+    "id": "ChIJyStGJAHVmwAR5LhRJaiEcCk",
+    "name": "Ipanema Beach",
+    "lat": -22.987064,
+    "lng": -43.204797
+   }
+  ]
+ },
+ "buenos-aires": {
+  "center": [
+   -34.60367,
+   -58.38212
+  ],
+  "places": [
+   {
+    "id": "ChIJ217apvCpSgARi1VOI06tvhE",
+    "name": "Obelisco de Buenos Aires",
+    "lat": -34.603701,
+    "lng": -58.381605
+   },
+   {
+    "id": "ChIJk5Zj-LA0o5URFK_uteT36Z4",
+    "name": "Caminito",
+    "lat": -34.639326,
+    "lng": -58.362681
+   },
+   {
+    "id": "ChIJs5EH8aLKvJURw6UX3MYKGKE",
+    "name": "Recoleta Cemetery",
+    "lat": -34.587364,
+    "lng": -58.392955
+   },
+   {
+    "id": "ChIJIxYSMMbKvJURqZGJyCpvOFM",
+    "name": "Teatro Colón",
+    "lat": -34.601152,
+    "lng": -58.383328
+   }
+  ]
+ },
+ "cusco": {
+  "center": [
+   -13.53195,
+   -71.96746
+  ],
+  "places": [
+   {
+    "id": "ChIJdfHXnHPWbZERQ2P8gpCafAI",
+    "name": "Plaza de Armas de Cusco",
+    "lat": -13.516757,
+    "lng": -71.978813
+   },
+   {
+    "id": "ChIJJT73zArWbZERPWclxK0YkWk",
+    "name": "Qorikancha",
+    "lat": -13.520237,
+    "lng": -71.975234
+   },
+   {
+    "id": "ChIJ_agIfG7WbZERPIDD5LG4PJ4",
+    "name": "Sacsayhuamán",
+    "lat": -13.509856,
+    "lng": -71.981688
+   },
+   {
+    "id": "ChIJVVVViV-abZERJxqgpA43EDo",
+    "name": "Machu Picchu",
+    "lat": -13.163199,
+    "lng": -72.545262
+   }
+  ]
+ },
+ "lima": {
+  "center": [
+   -12.04669,
+   -77.04309
+  ],
+  "places": [
+   {
+    "id": "ChIJFRFhKrTIBZERpUPNsQf_8KE",
+    "name": "Plaza Mayor de Lima",
+    "lat": -12.04599,
+    "lng": -77.030622
+   },
+   {
+    "id": "ChIJdQ2wCSHIBZERGCknnwoWaEk",
+    "name": "Miraflores Clifftops",
+    "lat": -12.126944,
+    "lng": -77.036616
+   },
+   {
+    "id": "ChIJgdBZm-23BZERYJq0Qr_xAIQ",
+    "name": "Barranco",
+    "lat": -12.149051,
+    "lng": -77.022753
+   },
+   {
+    "id": "ChIJZVVYKD7IBZERQgSuheJS10o",
+    "name": "Huaca Pucllana",
+    "lat": -12.111208,
+    "lng": -77.033608
+   }
+  ]
+ },
+ "cartagena": {
+  "center": [
+   10.39323,
+   -75.48323
+  ],
+  "places": [
+   {
+    "id": "ChIJ____b_ol9o4RLoG_cv6u6cU",
+    "name": "Walled City & Clock Tower",
+    "lat": 10.422979,
+    "lng": -75.549218
+   },
+   {
+    "id": "ChIJH6uI4HUv9o4RuZ_iWMra6MA",
+    "name": "Getsemaní",
+    "lat": 10.420606,
+    "lng": -75.545363
+   },
+   {
+    "id": "ChIJKykMr4Iv9o4RwbGBeh5eM1Y",
+    "name": "Castillo San Felipe de Barajas",
+    "lat": 10.422523,
+    "lng": -75.539289
+   },
+   {
+    "id": "ChIJi0TZdJkv9o4RBY_quyK0cwc",
+    "name": "Las Bóvedas",
+    "lat": 10.430153,
+    "lng": -75.546457
+   }
+  ]
+ },
+ "santiago": {
+  "center": [
+   -33.44449,
+   -70.65423
+  ],
+  "places": [
+   {
+    "id": "ChIJUQ2xxPLFYpYRgzyi3olg7fU",
+    "name": "Cerro San Cristóbal",
+    "lat": -33.42024,
+    "lng": -70.631375
+   },
+   {
+    "id": "ChIJXYCenaPFYpYRdxnMjDaDNzI",
+    "name": "Plaza de Armas de Santiago",
+    "lat": -33.437894,
+    "lng": -70.651092
+   },
+   {
+    "id": "ChIJN4V0fkLPYpYRm2jflwE_YSA",
+    "name": "Sky Costanera",
+    "lat": -33.416958,
+    "lng": -70.606772
+   },
+   {
+    "id": "ChIJBWlI4us9YpYRBEZ29RDQjqM",
+    "name": "Barrio Lastarria",
+    "lat": -33.438271,
+    "lng": -70.641085
+   }
+  ]
+ },
+ "cape-town": {
+  "center": [
+   -33.92209,
+   18.42314
+  ],
+  "places": [
+   {
+    "id": "ChIJTSM82_FnzB0RK5X9oWUjsgc",
+    "name": "Table Mountain Aerial Cableway",
+    "lat": -33.948335,
+    "lng": 18.402946
+   },
+   {
+    "id": "ChIJKeByCDY-zB0RECn0gAHgvHw",
+    "name": "Boulders Beach",
+    "lat": -34.195615,
+    "lng": 18.450359
+   },
+   {
+    "id": "ChIJZz_grPwizB0R6aJ8t_FcKDU",
+    "name": "Cape of Good Hope",
+    "lat": -34.356842,
+    "lng": 18.473988
+   },
+   {
+    "id": "ChIJzyxdn4tgzB0R1KptqzNTKUw",
+    "name": "V&A Waterfront",
+    "lat": -33.911798,
+    "lng": 18.422698
+   }
+  ]
+ },
+ "marrakech": {
+  "center": [
+   31.62252,
+   -7.98983
+  ],
+  "places": [
+   {
+    "id": "ChIJ-WuddEHvrw0RDeah4wzCrnI",
+    "name": "Jemaa el-Fnaa",
+    "lat": 31.625952,
+    "lng": -7.989049
+   },
+   {
+    "id": "ChIJj7dmi4furw0RHPHQzsn2zIg",
+    "name": "Jardin Majorelle",
+    "lat": 31.641203,
+    "lng": -8.00324
+   },
+   {
+    "id": "ChIJq0vBckfurw0R23-BRUdfmII",
+    "name": "Bahia Palace",
+    "lat": 31.621707,
+    "lng": -7.981969
+   },
+   {
+    "id": "ChIJ313XmVzurw0Rwm9umhM4zdg",
+    "name": "Koutoubia Mosque",
+    "lat": 31.62372,
+    "lng": -7.99362
+   }
+  ]
+ },
+ "cairo": {
+  "center": [
+   30.04442,
+   31.23571
+  ],
+  "places": [
+   {
+    "id": "ChIJzbs54n1PWBQRizZuWjV0dMo",
+    "name": "Pyramids of Giza",
+    "lat": 29.977296,
+    "lng": 31.132495
+   },
+   {
+    "id": "ChIJeamuo2JPWBQRqb1mQKbw08k",
+    "name": "Great Sphinx of Giza",
+    "lat": 29.975269,
+    "lng": 31.137567
+   },
+   {
+    "id": "ChIJ0YpKmDRFWBQRGibsxFtMdkU",
+    "name": "Grand Egyptian Museum",
+    "lat": 29.993199,
+    "lng": 31.124441
+   },
+   {
+    "id": "ChIJD1gOLOtAWBQREX0CYeTgYRc",
+    "name": "Khan el-Khalili",
+    "lat": 30.047739,
+    "lng": 31.262254
+   }
+  ]
+ },
+ "nairobi": {
+  "center": [
+   -1.29207,
+   36.82195
+  ],
+  "places": [
+   {
+    "id": "ChIJRbw23rsPLxgR7HBoltFxlm8",
+    "name": "Nairobi National Park",
+    "lat": -1.382492,
+    "lng": 36.86102
+   },
+   {
+    "id": "ChIJ0yfppKkFLxgRHzXGUwv-YeE",
+    "name": "Giraffe Centre",
+    "lat": -1.376364,
+    "lng": 36.744317
+   },
+   {
+    "id": "ChIJoZmL2a4aLxgR_SXK7BCKewA",
+    "name": "Sheldrick Wildlife Trust",
+    "lat": -1.336985,
+    "lng": 36.775807
+   },
+   {
+    "id": "ChIJoyA2vvcWLxgRFBFbbRd9fso",
+    "name": "Karura Forest",
+    "lat": -1.236832,
+    "lng": 36.83038
+   }
+  ]
+ },
+ "zanzibar": {
+  "center": [
+   -6.13573,
+   39.36212
+  ],
+  "places": [
+   {
+    "id": "ChIJAb0vJFnQXBgR2JRaDkvlGJo",
+    "name": "Stone Town",
+    "lat": -6.162222,
+    "lng": 39.192073
+   },
+   {
+    "id": "ChIJ7bNFEhPRXBgRCinaTmXOV8w",
+    "name": "Forodhani Gardens",
+    "lat": -6.160341,
+    "lng": 39.189003
+   },
+   {
+    "id": "ChIJD13KLbLRXBgRw-T1Kt6PyJU",
+    "name": "House of Wonders",
+    "lat": -6.160959,
+    "lng": 39.189563
+   },
+   {
+    "id": "ChIJd2ubu0YeQxgRXxlekdwKdSs",
+    "name": "Nungwi Beach",
+    "lat": -5.723837,
+    "lng": 39.295081
+   }
+  ]
+ },
+ "victoria-falls": {
+  "center": [
+   -17.93158,
+   25.83017
+  ],
+  "places": [
+   {
+    "id": "ChIJc3q9QQDlTxkRmVE55Dnkctc",
+    "name": "The Falls Rainforest Trail",
+    "lat": -17.923321,
+    "lng": 25.840398
+   },
+   {
+    "id": "ChIJu5dtxvbvTxkRiXjwUSs9B-E",
+    "name": "Victoria Falls Bridge",
+    "lat": -17.928439,
+    "lng": 25.857203
+   },
+   {
+    "id": "ChIJ0QNf_FD9TxkR3aiOTID5fBc",
+    "name": "Zambezi National Park",
+    "lat": -17.978278,
+    "lng": 25.710179
+   },
+   {
+    "id": "ChIJETd_DlvlTxkRItOwpV_QdOg",
+    "name": "Victoria Falls Hotel",
+    "lat": -17.930804,
+    "lng": 25.842332
+   }
+  ]
+ }
+}

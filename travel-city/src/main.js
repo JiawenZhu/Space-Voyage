@@ -1,4 +1,8 @@
 import { countries, cities } from './cities.js';
+import {
+  hasMapsKey, initMap, isMapReady, showCity, flyBetween, recordVisit, fetchPlaceDetails,
+  focusPlace, cityPlaces, cityCenter, mapsUrlForPlace, mapsUrlForCity
+} from './map.js';
 
 const byId = Object.fromEntries(cities.map((c) => [c.id, c]));
 const countryById = Object.fromEntries(countries.map((c) => [c.id, c]));
@@ -53,6 +57,7 @@ const cursorLabel = $('.cursor-label');
 const dialogs = {
   about: $('#dialog-about'),
   destinations: $('#dialog-destinations'),
+  saved: $('#dialog-saved'),
   menu: $('#dialog-menu')
 };
 
@@ -204,6 +209,8 @@ function render() {
   drawerCityName.textContent = `${city.name}, ${city.nation}`;
 
   renderGallery();
+  renderSavedState();
+  renderPlaces();
   fitTitle();
 
   cityListNav.classList.remove('is-switching');
@@ -591,6 +598,10 @@ async function travel(targetId) {
     }
     setStatus(`Travelling to ${target.name}…`, true);
     experience.classList.remove('content-revealing', 'mask-revealing');
+    if (mapOpen && isMapReady()) {
+      flyBetween(current, targetId, isVideo(media) ? 3800 : 2200, reduceMotion.matches)
+        .then(() => showCity(targetId, { animate: true }));
+    }
 
     if (reduceMotion.matches) {
       if (isVideo(media)) await seekToEnd(media);
@@ -625,6 +636,7 @@ async function travel(targetId) {
       sceneVideo.classList.add('is-scene');
     }
     markVisited(current);
+    recordVisit(current);
     render();
     await waitTwoFrames();
 
@@ -676,8 +688,10 @@ function finishIntro() {
   setTimeout(() => preloader.remove(), 800);
   setTimeout(() => floatingLogo.classList.add('is-settled'), reduceMotion.matches ? 0 : 2000);
   markVisited(current);
+  recordVisit(current);
   render();
   startExperience();
+  openSharedTrip();
 }
 
 async function startExperience() {
@@ -903,6 +917,286 @@ portal.addEventListener('pointermove', (ev) => {
 });
 
 portal.addEventListener('pointerleave', () => customCursor.classList.remove('is-visible'));
+
+/* ---------- Want to go (saved cities and places, per browser) ---------- */
+
+const SAVED_KEY = 'travel-city:saved';
+const saveCityBtn = $('#save-city');
+const saveCityLabel = $('#save-city-label');
+const savedCount = $('#saved-count');
+const savedIntro = $('#saved-intro');
+const savedContent = $('#saved-content');
+const savedActions = $('#saved-actions');
+
+function loadSaved() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SAVED_KEY));
+    return {
+      cities: (s?.cities ?? []).filter((id) => byId[id]),
+      places: (s?.places ?? []).filter((p) => p?.id && byId[p.city])
+    };
+  } catch {
+    return { cities: [], places: [] };
+  }
+}
+
+const saved = loadSaved();
+let sharedTrip = null; // a list opened from someone else's share link
+
+function persistSaved() {
+  try { localStorage.setItem(SAVED_KEY, JSON.stringify(saved)); } catch {}
+  renderSavedState();
+  renderPlaces();
+  if (dialogs.saved.open) renderSavedDialog();
+}
+
+const isCitySaved = (id) => saved.cities.includes(id);
+const isPlaceSaved = (id) => saved.places.some((p) => p.id === id);
+
+function toggleCity(id) {
+  saved.cities = isCitySaved(id) ? saved.cities.filter((c) => c !== id) : [...saved.cities, id];
+  persistSaved();
+  setStatus(isCitySaved(id) ? `${byId[id].name} saved to Want to go.` : `${byId[id].name} removed from Want to go.`, false);
+}
+
+function findPlace(id) {
+  for (const c of cities) {
+    const p = cityPlaces(c.id).find((x) => x.id === id);
+    if (p) return { ...p, city: c.id };
+  }
+  return null;
+}
+
+function togglePlace(id) {
+  const p = findPlace(id);
+  if (!p) return;
+  saved.places = isPlaceSaved(id) ? saved.places.filter((x) => x.id !== id) : [...saved.places, { id, name: p.name, city: p.city }];
+  persistSaved();
+  setStatus(isPlaceSaved(id) ? `${p.name} saved to Want to go.` : `${p.name} removed from Want to go.`, false);
+}
+
+function renderSavedState() {
+  const on = isCitySaved(current);
+  saveCityBtn.setAttribute('aria-pressed', String(on));
+  saveCityLabel.textContent = on ? 'Saved' : 'Want to go';
+  savedCount.textContent = String(saved.cities.length + saved.places.length);
+}
+
+saveCityBtn.addEventListener('click', () => toggleCity(current));
+
+function shareUrl(list) {
+  const url = new URL(location.href);
+  url.hash = '';
+  url.search = '';
+  if (list.cities.length) url.searchParams.set('trip', list.cities.join(','));
+  if (list.places.length) url.searchParams.set('places', list.places.map((p) => p.id).join(','));
+  return url.toString();
+}
+
+function csvFor(list) {
+  const rows = [['Name', 'Type', 'City', 'Country', 'Latitude', 'Longitude', 'Google Maps']];
+  list.cities.forEach((id) => {
+    const c = byId[id];
+    const ll = cityCenter(id);
+    rows.push([c.name, 'City', c.name, c.nation, ll?.lat ?? '', ll?.lng ?? '', mapsUrlForCity(c)]);
+  });
+  list.places.forEach((p) => {
+    const full = findPlace(p.id);
+    const c = byId[p.city];
+    rows.push([p.name, 'Place', c.name, c.nation, full?.lat ?? '', full?.lng ?? '', mapsUrlForPlace(p)]);
+  });
+  return rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+}
+
+function renderSavedDialog() {
+  const list = sharedTrip ?? saved;
+  const shared = Boolean(sharedTrip);
+  $('#saved-title').textContent = shared ? 'A shared trip' : 'Want to go';
+  const total = list.cities.length + list.places.length;
+  savedIntro.textContent = shared
+    ? `Someone shared ${total} ${total === 1 ? 'stop' : 'stops'} with you. Add them to your own list, or step through the portal to any of them.`
+    : total
+    ? 'Your shortlist. Open any stop in Google Maps to save it there, or download the list for Google My Maps.'
+    : 'Nothing saved yet. Tap “Want to go” on a city, or the heart next to a must-see place on the map.';
+
+  const cityCards = list.cities.map((id) => {
+    const c = byId[id];
+    return `<li class="saved-item">
+      <button type="button" class="saved-go" data-city="${id}"><img src="${c.photos[0].thumb}" alt="" /><span><strong>${esc(c.name)}</strong> <span lang="zh">${c.local}</span><small>${esc(c.nation)}</small></span></button>
+      <a class="saved-link" href="${mapsUrlForCity(c)}" target="_blank" rel="noopener" aria-label="Open ${esc(c.name)} in Google Maps">Google Maps ↗</a>
+      ${shared ? '' : `<button type="button" class="saved-remove" data-remove-city="${id}" aria-label="Remove ${esc(c.name)}">&times;</button>`}
+    </li>`;
+  }).join('');
+  const placeRows = list.places.map((p) => {
+    const c = byId[p.city];
+    return `<li class="saved-item saved-item--place">
+      <button type="button" class="saved-go" data-city="${p.city}"><span class="saved-pin" aria-hidden="true"></span><span><strong>${esc(p.name)}</strong><small>${esc(c.name)}, ${esc(c.nation)}</small></span></button>
+      <a class="saved-link" href="${mapsUrlForPlace(p)}" target="_blank" rel="noopener" aria-label="Open ${esc(p.name)} in Google Maps">Google Maps ↗</a>
+      ${shared ? '' : `<button type="button" class="saved-remove" data-remove-place="${p.id}" aria-label="Remove ${esc(p.name)}">&times;</button>`}
+    </li>`;
+  }).join('');
+  savedContent.innerHTML = `${list.cities.length ? `<h3 class="group-title">Cities</h3><ul class="saved-list">${cityCards}</ul>` : ''}
+    ${list.places.length ? `<h3 class="group-title">Places</h3><ul class="saved-list">${placeRows}</ul>` : ''}`;
+
+  savedActions.innerHTML = shared
+    ? `<button type="button" class="action-btn action-btn--primary" data-action="adopt">Add all to my list</button>`
+    : total
+    ? `<button type="button" class="action-btn action-btn--primary" data-action="share">Copy share link</button>
+       <button type="button" class="action-btn" data-action="csv">Download for Google My Maps</button>
+       <p class="saved-hint">Google Maps doesn’t let websites write to your saved lists. Use “Google Maps ↗” on any stop and tap Save there, or import the download at <a href="https://www.google.com/mymaps" target="_blank" rel="noopener">google.com/mymaps</a> to see your whole list in the Google Maps app.</p>`
+    : '';
+}
+
+dialogs.saved.addEventListener('click', async (e) => {
+  const removeCity = e.target.closest('[data-remove-city]');
+  const removePlace = e.target.closest('[data-remove-place]');
+  const go = e.target.closest('.saved-go');
+  const action = e.target.closest('[data-action]')?.dataset.action;
+  if (removeCity) toggleCity(removeCity.dataset.removeCity);
+  else if (removePlace) togglePlace(removePlace.dataset.removePlace);
+  else if (go) {
+    closeDialog(dialogs.saved);
+    navigate(go.dataset.city);
+  } else if (action === 'adopt' && sharedTrip) {
+    sharedTrip.cities.forEach((id) => { if (!isCitySaved(id)) saved.cities.push(id); });
+    sharedTrip.places.forEach((p) => { if (!isPlaceSaved(p.id)) saved.places.push(p); });
+    sharedTrip = null;
+    persistSaved();
+    setStatus('Added to your Want to go list.', false);
+  } else if (action === 'share') {
+    const url = shareUrl(saved);
+    const btn = e.target.closest('[data-action]');
+    try {
+      await navigator.clipboard.writeText(url);
+      btn.textContent = 'Link copied ✓';
+    } catch {
+      prompt('Copy this link:', url);
+    }
+  } else if (action === 'csv') {
+    const blob = new Blob([csvFor(saved)], { type: 'text/csv;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'travel-city-want-to-go.csv';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+});
+
+dialogs.saved.addEventListener('close', () => {
+  sharedTrip = null;
+});
+
+// Opening the saved list always shows your own list unless a shared link was just followed.
+$('#saved-button').addEventListener('click', () => renderSavedDialog());
+document.querySelectorAll('[data-open="saved"]').forEach((b) => b.addEventListener('click', () => renderSavedDialog()));
+
+function openSharedTrip() {
+  const params = new URLSearchParams(location.search);
+  if (!params.has('trip') && !params.has('places')) return;
+  const tripCities = (params.get('trip') || '').split(',').filter((id) => byId[id]);
+  const tripPlaces = (params.get('places') || '').split(',').map(findPlace).filter(Boolean)
+    .map(({ id, name, city }) => ({ id, name, city }));
+  history.replaceState(null, '', location.pathname + location.hash);
+  if (!tripCities.length && !tripPlaces.length) return;
+  sharedTrip = { cities: tripCities, places: tripPlaces };
+  renderSavedDialog();
+  openDialog(dialogs.saved);
+}
+
+/* ---------- Map panel ---------- */
+
+const MAP_KEY = 'travel-city:map-open';
+const mapSheet = $('#map-sheet');
+const mapToggle = $('#map-toggle');
+const mapCanvas = $('#map-canvas');
+const placeList = $('#place-list');
+let mapOpen = false;
+
+function renderPlaces() {
+  const city = byId[current];
+  $('#map-title').textContent = `${city.name} on the map`;
+  $('#map-open-city').href = mapsUrlForCity(city);
+  placeList.innerHTML = cityPlaces(current).map((p, i) => `
+    <li class="place" data-place-row="${p.id}">
+      <div class="place-main">
+        <button type="button" class="place-name" data-place="${p.id}" aria-expanded="false" aria-controls="detail-${p.id}"><span class="place-num" aria-hidden="true">${i + 1}</span>${esc(p.name)}</button>
+        <button type="button" class="heart" data-save-place="${p.id}" aria-pressed="${isPlaceSaved(p.id)}" aria-label="${isPlaceSaved(p.id) ? 'Remove' : 'Save'} ${esc(p.name)}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" /></svg>
+        </button>
+        <a class="place-maps" href="${mapsUrlForPlace(p)}" target="_blank" rel="noopener" aria-label="Open ${esc(p.name)} in Google Maps">↗</a>
+      </div>
+      <div class="place-detail" id="detail-${p.id}" hidden></div>
+    </li>`).join('');
+}
+
+async function expandPlace(id) {
+  const row = placeList.querySelector(`[data-place-row="${CSS.escape(id)}"]`);
+  if (!row) return;
+  const btn = row.querySelector('.place-name');
+  const detail = row.querySelector('.place-detail');
+  const open = btn.getAttribute('aria-expanded') !== 'true';
+  placeList.querySelectorAll('.place-name[aria-expanded="true"]').forEach((b) => {
+    b.setAttribute('aria-expanded', 'false');
+    b.closest('.place').querySelector('.place-detail').hidden = true;
+  });
+  if (!open) return;
+  btn.setAttribute('aria-expanded', 'true');
+  detail.hidden = false;
+  row.scrollIntoView({ block: 'nearest', behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+  focusPlace(id);
+  if (detail.dataset.loaded) return;
+  detail.innerHTML = '<p class="place-loading">Loading details…</p>';
+  try {
+    const d = await fetchPlaceDetails(id);
+    detail.dataset.loaded = '1';
+    detail.innerHTML = `
+      ${d.photo ? `<img src="${d.photo}" alt="" loading="lazy" />` : ''}
+      ${d.rating ? `<p class="place-rating"><span aria-hidden="true">★</span> ${d.rating.toFixed(1)} <small>(${(d.count ?? 0).toLocaleString('en')} Google reviews)</small></p>` : ''}
+      ${d.summary ? `<p>${esc(d.summary)}</p>` : ''}
+      ${d.photoBy ? `<p class="place-credit">Photo: <a href="${d.photoBy.uri}" target="_blank" rel="noopener">${esc(d.photoBy.displayName)}</a> · Google Maps</p>` : ''}`;
+  } catch (err) {
+    console.error(err);
+    detail.innerHTML = '<p class="place-loading">Details are unavailable right now.</p>';
+  }
+}
+
+placeList.addEventListener('click', (e) => {
+  const save = e.target.closest('[data-save-place]');
+  const name = e.target.closest('[data-place]');
+  if (save) togglePlace(save.dataset.savePlace);
+  else if (name) expandPlace(name.dataset.place);
+});
+
+async function setMapOpen(open) {
+  mapOpen = open;
+  try { localStorage.setItem(MAP_KEY, open ? '1' : '0'); } catch {}
+  experience.classList.toggle('map-open', open);
+  mapToggle.setAttribute('aria-pressed', String(open));
+  mapSheet.inert = !open;
+  if (!open) return;
+  if (!hasMapsKey) {
+    mapCanvas.innerHTML = '<p class="place-loading">Add a Google Maps API key to show the map.</p>';
+    return;
+  }
+  try {
+    const first = !isMapReady();
+    await initMap(mapCanvas, current, (id) => {
+      expandPlace(id);
+      placeList.querySelector(`[data-place="${CSS.escape(id)}"]`)?.focus({ preventScroll: true });
+    });
+    if (first) cities.forEach((c) => visited.has(c.id) && c.id !== current && recordVisit(c.id));
+    recordVisit(current);
+    await showCity(current);
+  } catch (err) {
+    console.error(err);
+    mapCanvas.innerHTML = '<p class="place-loading">The map couldn’t load. Check your connection or API key.</p>';
+  }
+}
+
+mapToggle.addEventListener('click', () => setMapOpen(!mapOpen));
+$('#map-close').addEventListener('click', () => { setMapOpen(false); mapToggle.focus(); });
+$('#drawer-map').addEventListener('click', () => { closeDialog(dialogs.menu); setMapOpen(true); });
+try { if (localStorage.getItem(MAP_KEY) === '1') setMapOpen(true); } catch {}
 
 /* ---------- Layout ---------- */
 

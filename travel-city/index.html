@@ -43,6 +43,14 @@
       <div class="header-actions">
         <nav class="nav" aria-label="Countries" id="country-nav"></nav>
         <button class="nav-plain" type="button" data-open="destinations" aria-haspopup="dialog">All cities</button>
+        <button class="icon-pill" id="map-toggle" type="button" aria-pressed="false" aria-controls="map-sheet">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" /><circle cx="12" cy="10" r="2.4" /></svg>
+          <span>Map</span>
+        </button>
+        <button class="icon-pill" id="saved-button" type="button" data-open="saved" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" /></svg>
+          <span class="visually-hidden">Want to go:</span><span id="saved-count">0</span>
+        </button>
         <button class="menu" id="menu-button" type="button" data-open="menu" aria-haspopup="dialog">Menu</button>
       </div>
     </header>
@@ -79,7 +87,13 @@
       <div class="title-block">
         <div class="gallery" id="gallery" role="group" aria-label="Photos"></div>
         <p class="photo-credit" id="photo-credit"></p>
-        <p class="city-kicker" id="city-kicker"></p>
+        <div class="kicker-row">
+          <p class="city-kicker" id="city-kicker"></p>
+          <button class="save-city" id="save-city" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" /></svg>
+            <span id="save-city-label">Want to go</span>
+          </button>
+        </div>
         <h1 id="city-title">Beijing</h1>
       </div>
       <details class="facts-panel" id="facts-panel" open>
@@ -89,6 +103,17 @@
         <dl class="facts" id="facts"></dl>
       </details>
     </section>
+
+    <aside class="map-sheet" id="map-sheet" aria-labelledby="map-title" inert>
+      <div class="map-sheet-head">
+        <h2 id="map-title">On the map</h2>
+        <a class="map-open" id="map-open-city" href="#" target="_blank" rel="noopener">Google Maps <span aria-hidden="true">↗</span><span class="visually-hidden">(opens in a new tab)</span></a>
+        <button class="modal-close modal-close--static" id="map-close" type="button" aria-label="Close map">&times;</button>
+      </div>
+      <div class="map-canvas" id="map-canvas" role="region" aria-label="Map of the city"></div>
+      <p class="list-heading place-heading">Must-see places</p>
+      <ol class="place-list" id="place-list"></ol>
+    </aside>
 
     <div class="status" id="status" role="status" aria-live="polite"></div>
 
@@ -121,6 +146,16 @@
     </div>
   </dialog>
 
+  <dialog class="modal" id="dialog-saved" aria-labelledby="saved-title">
+    <div class="modal-card modal-card--wide">
+      <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+      <h2 class="modal-title" id="saved-title">Want to go</h2>
+      <p class="modal-body" id="saved-intro"></p>
+      <div id="saved-content"></div>
+      <div class="saved-actions" id="saved-actions"></div>
+    </div>
+  </dialog>
+
   <dialog class="drawer" id="dialog-menu" aria-label="Menu">
     <div class="drawer-inner">
       <div>
@@ -130,6 +165,8 @@
         </div>
         <nav class="drawer-nav" aria-label="Site">
           <button type="button" data-open="destinations">All cities <span aria-hidden="true">&rarr;</span></button>
+          <button type="button" data-open="saved">Want to go <span aria-hidden="true">&rarr;</span></button>
+          <button type="button" id="drawer-map">Map <span aria-hidden="true">&rarr;</span></button>
           <button type="button" data-open="about">About <span aria-hidden="true">&rarr;</span></button>
         </nav>
         <div id="drawer-groups"></div>
