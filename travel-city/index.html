@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Travel City</title>
-  <meta name="description" content="Step through a portal from city to city across China and the USA." />
+  <meta name="description" content="Step through a portal between 46 cities on five continents." />
   <meta name="theme-color" content="#0b0a09" />
   <meta property="og:title" content="Travel City" />
-  <meta property="og:description" content="Step through a portal from city to city across China and the USA." />
+  <meta property="og:description" content="Step through a portal between 46 cities on five continents." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/cities/shanghai/1.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -55,8 +55,10 @@
 
     <section class="portal-wrap chrome" aria-label="Next destination">
       <div class="portal-heading">
-        <span>Next:</span>
-        <span><span id="next-number">[02]</span> <strong id="next-name">Xi’an</strong></span>
+        <span class="portal-next"><span>Next:</span><span><span id="next-number">[02]</span> <strong id="next-name">Xi’an</strong></span></span>
+        <button class="portal-close" id="portal-close" type="button" aria-label="Hide the portal" title="Hide the portal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" /></svg>
+        </button>
       </div>
       <button class="portal" id="portal" type="button" aria-label="Travel to Xi’an" aria-describedby="portal-hint"></button>
       <div class="portal-controls">
@@ -100,8 +102,8 @@
       <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
       <h2 class="modal-title" id="about-title">About Travel City</h2>
       <div class="modal-body">
-        <p><strong>Travel City</strong> lets you step through a portal from one city to the next. We’re starting with China and the USA — Europe and Southeast Asia are on the way.</p>
-        <p>Use the portal, the arrow buttons, your <kbd>←</kbd> <kbd>→</kbd> keys or a swipe to travel. Every city has its own link, so the browser’s Back button and shared links work too.</p>
+        <p><strong>Travel City</strong> lets you step through a portal from one city to the next. Explore 46 cities across China, the USA, East Asia, Southeast Asia, Europe, South America and Africa.</p>
+        <p>Use the portal, the arrow buttons, your <kbd>←</kbd> <kbd>→</kbd> keys or a swipe to travel. The arrow in the portal’s caption tucks it into the top-right corner so you can enjoy the photos; click the small portal to bring it back. Every city has its own link, so the browser’s Back button and shared links work too.</p>
         <p>Photos from <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>, credited on each photo. City facts from Wikipedia.</p>
       </div>
     </div>

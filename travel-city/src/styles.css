@@ -196,7 +196,8 @@ kbd {
 .nav button {
   border: 0;
   background: transparent;
-  padding: 8px 19px;
+  padding: 8px 14px;
+  white-space: nowrap;
   border-radius: var(--radius-pill);
   line-height: 1;
   transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
@@ -336,16 +337,73 @@ kbd {
 /* Portal */
 .portal-wrap {
   left: 50%;
-  top: 50%;
+  top: 47%;
   width: min(320px, 31vw, 34vh);
-  transform: translate(-50%, -54%);
+  transform: translate(-50%, -50%);
+  transition: left .9s var(--ease-expo), top .9s var(--ease-expo), width .9s var(--ease-expo), transform .9s var(--ease-expo), opacity .45s ease, filter .45s ease;
 }
 
-.portal-heading {
+/* Docked: the portal shrinks into a small "next city" window under the header. */
+.experience.portal-docked .portal-wrap {
+  left: calc(100% - var(--gutter));
+  top: calc(clamp(18px, 3.1vh, 28px) + 60px);
+  width: 64px;
+  transform: translate(-100%, 0);
+}
+
+.experience.portal-docked .portal-heading,
+.experience.portal-docked .portal-controls {
+  opacity: 0 !important;
+  visibility: hidden;
+  transition: opacity .2s ease, visibility 0s .2s;
+}
+
+.experience.portal-docked .portal::after {
+  opacity: 1;
+  border-color: rgba(255, 255, 255, .85);
+  animation: portal-pulse 2.6s var(--ease-out) 1s infinite;
+}
+
+.portal-next {
+  flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+}
+
+.portal-close {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  margin: -2px -8px -2px 10px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .16);
+  transition: background var(--dur-fast) ease;
+}
+
+.portal-close:hover { background: rgba(255, 255, 255, .34); }
+
+.portal-close svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.portal-heading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 6px 14px;
   border-radius: var(--radius-pill);
   background: var(--color-scrim);
@@ -380,11 +438,14 @@ kbd {
 .experience.is-busy .portal { cursor: progress; }
 
 .portal-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 14px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-top: 14px;
   opacity: 0;
 }
 
@@ -1134,8 +1195,11 @@ dialog.is-open::backdrop { opacity: 1; }
 .drawer-progress { margin-top: 6px; }
 
 /* Responsive */
-@media (max-width: 900px) {
+@media (max-width: 1240px) {
   .nav { display: none; }
+}
+
+@media (max-width: 900px) {
   .portal-wrap { width: min(280px, 44vw, 34vh); }
   .planet-content h1 { font-size: clamp(64px, 11vw, 130px); }
   .nav-plain { display: none; }
@@ -1199,7 +1263,7 @@ dialog.is-open::backdrop { opacity: 1; }
 @media (max-width: 640px) {
   .brand-name { display: none; }
   .planet-list { display: none; }
-  .portal-wrap { top: 43%; width: min(240px, 62vw); }
+  .portal-wrap { top: 44%; width: min(240px, 62vw); }
   .planet-content h1 { font-size: clamp(60px, 20vw, 120px); }
   .photo-credit { display: none; }
   .thumb { width: 50px; height: 34px; }
@@ -1213,10 +1277,10 @@ dialog.is-open::backdrop { opacity: 1; }
 }
 
 @media (max-height: 520px) {
-  .portal-wrap { width: min(170px, 30vw); top: 50%; }
+  .portal-wrap { width: min(170px, 30vw); top: 52%; }
   .portal { border-radius: 52px; }
-  .portal-heading { margin-bottom: 8px; font-size: 13px; padding: 4px 10px; }
-  .portal-controls { margin-top: 8px; }
+  .portal-heading { bottom: calc(100% + 8px); font-size: 13px; padding: 4px 10px; }
+  .portal-controls { top: calc(100% + 8px); }
   .portal-hint { display: none; }
   .planet-list { transform: translateY(-50%); }
   .planet-content h1 { font-size: clamp(48px, 15vh, 80px); }

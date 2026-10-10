@@ -22,6 +22,7 @@ const nextName = $('#next-name');
 const nextNumber = $('#next-number');
 const cityTitle = $('#city-title');
 const cityKicker = $('#city-kicker');
+const portalClose = $('#portal-close');
 const cityIntro = $('#city-intro');
 const gallery = $('#gallery');
 const photoCredit = $('#photo-credit');
@@ -148,12 +149,13 @@ function render() {
   experience.dataset.city = current;
   document.title = `${city.name} — Travel City`;
   cityTitle.textContent = city.name;
-  cityKicker.innerHTML = `<span lang="zh">${city.local}</span> · ${esc(country.name)} · ${esc(city.tagline)}`;
+  cityKicker.innerHTML = `<span lang="zh">${city.local}</span> · ${esc(city.nation)} · ${esc(city.tagline)}`;
   cityIntro.textContent = city.intro;
 
   nextName.textContent = next.name;
   nextNumber.textContent = `[${cityNumber(next)}]`;
-  portal.setAttribute('aria-label', `Travel to ${next.name}`);
+  portal.setAttribute('aria-label', portalDocked ? `Show the portal (next: ${next.name})` : `Travel to ${next.name}`);
+  portal.title = portalDocked ? `Next: ${next.name} — click to open` : '';
   prevBtn.setAttribute('aria-label', `Previous city: ${prev.name}`);
   prevBtn.title = `Previous: ${prev.name}`;
   nextBtn.setAttribute('aria-label', `Next city: ${next.name}`);
@@ -167,7 +169,7 @@ function render() {
 
   countryNav.innerHTML = countries
     .filter((c) => c.available)
-    .map((c) => `<button type="button" data-country="${c.id}" aria-pressed="${c.id === city.country}">${c.name} <span lang="zh">${c.local}</span></button>`)
+    .map((c) => `<button type="button" data-country="${c.id}" aria-pressed="${c.id === city.country}" title="${c.name} ${c.local}">${c.short}</button>`)
     .join('');
 
   const list = citiesOf(city.country);
@@ -199,7 +201,7 @@ function render() {
   drawerProgress.textContent = progressText;
   overviewProgressText.textContent = progressText;
   overviewProgressFill.style.width = `${(visited.size / cities.length) * 100}%`;
-  drawerCityName.textContent = `${city.name}, ${country.name}`;
+  drawerCityName.textContent = `${city.name}, ${city.nation}`;
 
   renderGallery();
   fitTitle();
@@ -389,6 +391,7 @@ let lastTime = performance.now();
 let drawQueued = false;
 let activeAnimations = 0;
 let portalRadius = 90;
+let dockMix = 0; // 0 = screen-locked window, 1 = photo fitted to the docked mini portal
 
 function requestDraw() {
   if (drawQueued) return;
@@ -440,17 +443,17 @@ function resizeCanvas() {
 
 window.addEventListener('resize', resizeCanvas);
 
-function drawCover(media, zoom = 1) {
+// Covers a box with the media. The full-size portal uses the whole viewport as the box
+// (a window onto a screen-sized scene); the docked mini portal fits the photo to itself.
+function drawCover(media, zoom = 1, box = { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight }) {
   const mw = media.videoWidth || media.naturalWidth;
   const mh = media.videoHeight || media.naturalHeight;
   if (!mw || !mh) return;
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  const scale = Math.max(vw / mw, vh / mh) * zoom;
+  const scale = Math.max(box.w / mw, box.h / mh) * zoom;
   const w = mw * scale;
   const h = mh * scale;
   try {
-    ctx.drawImage(media, (vw - w) / 2, (vh - h) / 2, w, h);
+    ctx.drawImage(media, box.x + (box.w - w) / 2, box.y + (box.h - h) / 2, w, h);
   } catch {}
 }
 
@@ -506,7 +509,7 @@ function draw(now) {
   const scale = e ? 1 : maskScale;
   const w = (rect.width + (vw - rect.width) * e) * scale;
   const h = (rect.height + (vh - rect.height) * e) * scale;
-  const r = portalRadius * (1 - e) * scale;
+  const r = Math.min(portalRadius, rect.width * 0.28) * (1 - e) * scale;
 
   if (w > 1 && h > 1) {
     const pts = sampleRoundedRect(w, h, r);
@@ -521,7 +524,11 @@ function draw(now) {
     ctx.clip();
     ctx.fillStyle = '#0b0a09';
     ctx.fillRect(0, 0, vw, vh);
-    drawCover(portalMedia, imageZoom);
+    const mix = dockMix * (1 - e);
+    const box = mix
+      ? { x: rect.left * mix, y: rect.top * mix, w: vw + (rect.width - vw) * mix, h: vh + (rect.height - vh) * mix }
+      : undefined;
+    drawCover(portalMedia, imageZoom, box);
     ctx.restore();
   }
 
@@ -529,7 +536,7 @@ function draw(now) {
 }
 
 window.addEventListener('pointermove', (ev) => {
-  if (ev.pointerType === 'touch' || busy || reduceMotion.matches) return;
+  if (ev.pointerType === 'touch' || busy || portalDocked || reduceMotion.matches) return;
   targetY = (ev.clientX / window.innerWidth - 0.5) * 37.4;
   targetX = (ev.clientY / window.innerHeight - 0.5) * -33;
   requestDraw();
@@ -726,7 +733,34 @@ document.addEventListener('visibilitychange', () => {
 
 /* ---------- Controls ---------- */
 
-portal.addEventListener('click', () => navigate(neighbour(current, 1)));
+portal.addEventListener('click', () => {
+  if (portalDocked) setPortalDocked(false);
+  else navigate(neighbour(current, 1));
+});
+portalClose.addEventListener('click', () => setPortalDocked(true));
+
+/* ---------- Docking the portal (tucks into the top-right so the photos are clear) ---------- */
+
+const DOCK_KEY = 'travel-city:portal-docked';
+let portalDocked = false;
+try { portalDocked = localStorage.getItem(DOCK_KEY) === '1'; } catch {}
+
+function setPortalDocked(docked) {
+  portalDocked = docked;
+  try { localStorage.setItem(DOCK_KEY, docked ? '1' : '0'); } catch {}
+  experience.classList.toggle('portal-docked', docked);
+  customCursor.classList.remove('is-visible');
+  targetX = 0;
+  targetY = 0;
+  render();
+  // Keep the canvas mask following the portal while CSS moves it, and blend the framing.
+  const from = dockMix;
+  animateValue((v) => { dockMix = from + ((docked ? 1 : 0) - from) * v; }, 950);
+  portal.focus({ preventScroll: true });
+}
+
+experience.classList.toggle('portal-docked', portalDocked);
+dockMix = portalDocked ? 1 : 0;
 nextBtn.addEventListener('click', () => navigate(neighbour(current, 1)));
 prevBtn.addEventListener('click', () => navigate(neighbour(current, -1)));
 
@@ -856,6 +890,7 @@ portal.addEventListener('pointerenter', (ev) => {
   if (ev.pointerType === 'touch' || !finePointer.matches || reduceMotion.matches) return;
   pointerX = orbitX = ev.clientX;
   pointerY = orbitY = ev.clientY;
+  cursorLabel.textContent = portalDocked ? 'Open' : 'Enter';
   customCursor.classList.add('is-visible');
   requestCursorFrame();
 });
