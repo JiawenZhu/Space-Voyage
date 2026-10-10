@@ -957,7 +957,13 @@ function persistSaved() {
 const isCitySaved = (id) => saved.cities.includes(id);
 const isPlaceSaved = (id) => saved.places.some((p) => p.id === id);
 
+// Re-read before every change so another open tab's edits are never overwritten.
+function syncSaved() {
+  Object.assign(saved, loadSaved());
+}
+
 function toggleCity(id) {
+  syncSaved();
   saved.cities = isCitySaved(id) ? saved.cities.filter((c) => c !== id) : [...saved.cities, id];
   persistSaved();
   setStatus(isCitySaved(id) ? `${byId[id].name} saved to Want to go.` : `${byId[id].name} removed from Want to go.`, false);
@@ -974,6 +980,7 @@ function findPlace(id) {
 function togglePlace(id) {
   const p = findPlace(id);
   if (!p) return;
+  syncSaved();
   saved.places = isPlaceSaved(id) ? saved.places.filter((x) => x.id !== id) : [...saved.places, { id, name: p.name, city: p.city }];
   persistSaved();
   setStatus(isPlaceSaved(id) ? `${p.name} saved to Want to go.` : `${p.name} removed from Want to go.`, false);
@@ -984,8 +991,20 @@ function renderSavedState() {
   saveCityBtn.setAttribute('aria-pressed', String(on));
   saveCityLabel.textContent = on ? 'Saved' : 'Want to go';
   saveCityBtn.title = on ? `Remove ${byId[current].name} from Want to go` : `Save ${byId[current].name} to Want to go`;
-  savedCount.textContent = String(saved.cities.length + saved.places.length);
+  const total = saved.cities.length + saved.places.length;
+  savedCount.textContent = String(total);
+  $('#saved-button').classList.toggle('has-saved', total > 0);
 }
+
+// Keep every open tab in step with changes made in another one.
+window.addEventListener('storage', (e) => {
+  if (e.key !== SAVED_KEY) return;
+  syncSaved();
+  renderSavedState();
+  renderPlaces();
+  if (dialogs.saved.open && !sharedTrip) renderSavedDialog();
+  if (dialogs.quiz.open) renderQuiz();
+});
 
 saveCityBtn.addEventListener('click', () => toggleCity(current));
 
@@ -1063,6 +1082,7 @@ dialogs.saved.addEventListener('click', async (e) => {
     closeDialog(dialogs.saved);
     navigate(go.dataset.city);
   } else if (action === 'adopt' && sharedTrip) {
+    syncSaved();
     sharedTrip.cities.forEach((id) => { if (!isCitySaved(id)) saved.cities.push(id); });
     sharedTrip.places.forEach((p) => { if (!isPlaceSaved(p.id)) saved.places.push(p); });
     sharedTrip = null;
@@ -1242,7 +1262,6 @@ setInterval(() => {
 
 /* ---------- Map panel ---------- */
 
-const MAP_KEY = 'travel-city:map-open';
 const mapSheet = $('#map-sheet');
 const mapToggle = $('#map-toggle');
 const mapCanvas = $('#map-canvas');
@@ -1306,7 +1325,6 @@ placeList.addEventListener('click', (e) => {
 
 async function setMapOpen(open) {
   mapOpen = open;
-  try { localStorage.setItem(MAP_KEY, open ? '1' : '0'); } catch {}
   experience.classList.toggle('map-open', open);
   mapToggle.setAttribute('aria-pressed', String(open));
   mapSheet.inert = !open;
@@ -1333,7 +1351,6 @@ async function setMapOpen(open) {
 mapToggle.addEventListener('click', () => setMapOpen(!mapOpen));
 $('#map-close').addEventListener('click', () => { setMapOpen(false); mapToggle.focus(); });
 $('#drawer-map').addEventListener('click', () => { closeDialog(dialogs.menu); setMapOpen(true); });
-try { if (localStorage.getItem(MAP_KEY) === '1') setMapOpen(true); } catch {}
 
 /* ---------- Layout ---------- */
 

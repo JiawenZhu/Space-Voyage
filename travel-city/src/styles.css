@@ -1337,7 +1337,7 @@ dialog.is-open::backdrop { opacity: 1; }
   text-shadow: none;
 }
 
-#saved-button svg { fill: #ff6b81; stroke: #ff6b81; }
+#saved-button.has-saved svg { fill: #ff6b81; stroke: #ff6b81; }
 
 /* ---------- Want to go on the city title ---------- */
 .kicker-row {
