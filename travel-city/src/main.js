@@ -266,7 +266,8 @@ function renderGallery() {
     .map((p, i) => `<button type="button" class="thumb" data-slide="${i}" aria-label="Photo ${i + 1}: ${esc(p.caption)}" aria-pressed="${i === slideIndex}"><img src="${p.thumb}" alt="" /></button>`)
     .join('');
   const p = city.photos[slideIndex];
-  photoCredit.innerHTML = `${esc(p.caption)} · Photo by <a href="${p.authorUrl}?utm_source=travel_city&utm_medium=referral" target="_blank" rel="noopener">${esc(p.author)}</a> on <a href="https://unsplash.com/?utm_source=travel_city&utm_medium=referral" target="_blank" rel="noopener">Unsplash</a>`;
+  photoCredit.innerHTML = `${esc(p.caption)} · Photo by <a href="${p.authorUrl}?utm_source=travel_city&utm_medium=referral" target="_blank" rel="noopener">${esc(p.author)}</a> on <a href="https://unsplash.com/?utm_source=travel_city&utm_medium=referral" target="_blank" rel="noopener">Unsplash</a>`
+    + (city.clipCredit ? ` · Video by <a href="${city.clipCredit.url}" target="_blank" rel="noopener">${esc(city.clipCredit.author)}</a> on Pexels` : '');
 }
 
 function startSlideshow() {
@@ -602,7 +603,7 @@ async function travel(targetId) {
     setStatus(`Travelling to ${target.name}…`, true);
     experience.classList.remove('content-revealing', 'mask-revealing');
     if (mapOpen && isMapReady()) {
-      flyBetween(current, targetId, isVideo(media) ? 3800 : 2200, reduceMotion.matches)
+      flyBetween(current, targetId, isVideo(media) ? 3400 : 2200, reduceMotion.matches)
         .then(() => showCity(targetId, { animate: true }));
     }
 
@@ -614,7 +615,7 @@ async function travel(targetId) {
       requestDraw();
       if (isVideo(media)) {
         media.currentTime = 0;
-        media.playbackRate = 1.15;
+        media.playbackRate = 1.4;
         const ended = playbackEnded(media);
         await media.play().catch(() => {});
         await animateValue((v) => { expansion = v; }, 1100);

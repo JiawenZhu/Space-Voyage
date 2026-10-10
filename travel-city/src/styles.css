@@ -605,7 +605,7 @@ kbd {
 .stat-value {
   font-size: 15px;
   font-weight: 600;
-  white-space: nowrap;
+  line-height: 1.25;
 }
 
 .size-bar {
@@ -1412,7 +1412,7 @@ dialog.is-open::backdrop { opacity: 1; }
   transition: opacity var(--dur-fast) ease;
 }
 
-.experience.is-transitioning .map-sheet { opacity: 1; filter: none; }
+.experience.map-open.is-transitioning .map-sheet { opacity: 1; filter: none; }
 
 .map-sheet-head {
   display: flex;

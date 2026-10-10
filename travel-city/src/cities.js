@@ -1,4 +1,5 @@
 import photos from './photos.json';
+import videos from './videos.json';
 
 // Regions in display order (`short` is the header label). Add a region by appending here
 // and giving its cities the same `country` id.
@@ -575,15 +576,18 @@ const cityData = [
   }
 ];
 
-// Optional Seedance arrival clips, added city by city once approved.
-const clips = {
-  shanghai: '/cities/shanghai/arrival.mp4' // sample — awaiting approval
-};
+// Arrival clips: Pexels footage (src/videos.json, encoded by scripts/videos.py), plus the
+// Seedance-generated Shanghai flyover.
+const clips = Object.fromEntries(Object.keys(videos).map((id) => [id, `/cities/${id}/arrival.mp4`]));
+clips.shanghai = '/cities/shanghai/arrival.mp4';
 
 export const cities = cityData.map((c) => ({
   ...c,
   nation: c.nation || countries.find((r) => r.id === c.country).name,
   clip: clips[c.id],
+  clipCredit: videos[c.id]
+    ? { author: videos[c.id].author, url: `https://www.pexels.com/video/${videos[c.id].id}/` }
+    : null,
   photos: photos[c.id].map(([id, author, username, caption], i) => ({
     src: `/cities/${c.id}/${i + 1}.jpg`,
     thumb: `/cities/${c.id}/thumb-${i + 1}.jpg`,
