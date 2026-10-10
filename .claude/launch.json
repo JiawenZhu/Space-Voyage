@@ -4,8 +4,20 @@
     {
       "name": "space-voyage",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
+    },
+    {
+      "name": "travel-city",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:travel"
+      ],
+      "port": 3001
     }
   ]
 }

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Travel City</title>
+  <meta name="description" content="Step through a portal from city to city across China and the USA." />
+  <meta name="theme-color" content="#0b0a09" />
+  <meta property="og:title" content="Travel City" />
+  <meta property="og:description" content="Step through a portal from city to city across China and the USA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/cities/shanghai/1.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@200;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <main class="experience">
+    <div class="backgrounds" aria-hidden="true">
+      <div class="slides" id="slides"></div>
+      <video class="scene-video" muted playsinline preload="none"></video>
+      <video class="scene-video" muted playsinline preload="none"></video>
+    </div>
+    <div class="shade" aria-hidden="true"></div>
+    <canvas id="portal-canvas" class="portal-canvas" aria-hidden="true"></canvas>
+
+    <div class="preloader" id="preloader">
+      <div class="preloader-count" id="preloader-count" role="status">
+        <span id="preloader-value">0</span><span class="percent">%</span><span class="visually-hidden"> loaded</span>
+      </div>
+      <button class="skip-intro" id="skip-intro" type="button">Skip intro</button>
+    </div>
+
+    <a class="floating-logo" id="floating-logo" href="#" aria-label="Travel City — back to the start">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" /><path d="M20 6l4.5 14L20 34l-4.5-14z" /><circle cx="20" cy="20" r="2.4" /></svg>
+    </a>
+
+    <header class="header chrome">
+      <a class="brand-name" href="#" tabindex="-1" aria-hidden="true">Travel City</a>
+      <div class="header-actions">
+        <nav class="nav" aria-label="Countries" id="country-nav"></nav>
+        <button class="nav-plain" type="button" data-open="destinations" aria-haspopup="dialog">All cities</button>
+        <button class="menu" id="menu-button" type="button" data-open="menu" aria-haspopup="dialog">Menu</button>
+      </div>
+    </header>
+
+    <nav class="planet-list chrome" aria-label="Cities">
+      <p class="list-heading" id="list-heading"></p>
+      <ol class="planet-items" id="city-list"></ol>
+      <p class="progress-label" id="progress-label"></p>
+    </nav>
+
+    <section class="portal-wrap chrome" aria-label="Next destination">
+      <div class="portal-heading">
+        <span>Next:</span>
+        <span><span id="next-number">[02]</span> <strong id="next-name">Xi’an</strong></span>
+      </div>
+      <button class="portal" id="portal" type="button" aria-label="Travel to Xi’an" aria-describedby="portal-hint"></button>
+      <div class="portal-controls">
+        <button class="step-btn" id="prev-btn" type="button" aria-label="Previous city">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        </button>
+        <span class="portal-hint" id="portal-hint">
+          <span class="hint-fine">Click portal or press →</span>
+          <span class="hint-touch">Tap the portal · swipe</span>
+        </span>
+        <button class="step-btn" id="next-btn" type="button" aria-label="Next city">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+    </section>
+
+    <section class="planet-content chrome" aria-labelledby="city-title">
+      <div class="title-block">
+        <div class="gallery" id="gallery" role="group" aria-label="Photos"></div>
+        <p class="photo-credit" id="photo-credit"></p>
+        <p class="city-kicker" id="city-kicker"></p>
+        <h1 id="city-title">Beijing</h1>
+      </div>
+      <details class="facts-panel" id="facts-panel" open>
+        <summary>City guide</summary>
+        <p class="city-intro" id="city-intro"></p>
+        <div class="stats" id="stats"></div>
+        <dl class="facts" id="facts"></dl>
+      </details>
+    </section>
+
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <div class="custom-cursor" aria-hidden="true">
+      <span class="cursor-orbit"></span><span class="cursor-label">Enter</span>
+    </div>
+  </main>
+
+  <dialog class="modal" id="dialog-about" aria-labelledby="about-title">
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+      <h2 class="modal-title" id="about-title">About Travel City</h2>
+      <div class="modal-body">
+        <p><strong>Travel City</strong> lets you step through a portal from one city to the next. We’re starting with China and the USA — Europe and Southeast Asia are on the way.</p>
+        <p>Use the portal, the arrow buttons, your <kbd>←</kbd> <kbd>→</kbd> keys or a swipe to travel. Every city has its own link, so the browser’s Back button and shared links work too.</p>
+        <p>Photos from <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>, credited on each photo. City facts from Wikipedia.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="modal" id="dialog-destinations" aria-labelledby="destinations-title">
+    <div class="modal-card modal-card--wide">
+      <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+      <h2 class="modal-title" id="destinations-title">All cities</h2>
+      <div class="progress">
+        <div class="progress-head"><span>Trip progress</span><span id="overview-progress-text"></span></div>
+        <div class="progress-track"><span class="progress-fill" id="overview-progress-fill"></span></div>
+      </div>
+      <div id="destination-groups"></div>
+    </div>
+  </dialog>
+
+  <dialog class="drawer" id="dialog-menu" aria-label="Menu">
+    <div class="drawer-inner">
+      <div>
+        <div class="drawer-head">
+          <span class="eyebrow">Navigation</span>
+          <button class="modal-close modal-close--static" type="button" data-close aria-label="Close menu">&times;</button>
+        </div>
+        <nav class="drawer-nav" aria-label="Site">
+          <button type="button" data-open="destinations">All cities <span aria-hidden="true">&rarr;</span></button>
+          <button type="button" data-open="about">About <span aria-hidden="true">&rarr;</span></button>
+        </nav>
+        <div id="drawer-groups"></div>
+      </div>
+      <div class="drawer-footer">
+        <div><strong>Now in:</strong> <span id="drawer-city-name"></span></div>
+        <div class="drawer-progress" id="drawer-progress"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
