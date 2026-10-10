@@ -982,6 +982,7 @@ function renderSavedState() {
   const on = isCitySaved(current);
   saveCityBtn.setAttribute('aria-pressed', String(on));
   saveCityLabel.textContent = on ? 'Saved' : 'Want to go';
+  saveCityBtn.title = on ? `Remove ${byId[current].name} from Want to go` : `Save ${byId[current].name} to Want to go`;
   savedCount.textContent = String(saved.cities.length + saved.places.length);
 }
 
@@ -1144,7 +1145,7 @@ function renderQuiz() {
         </div>
         <div class="quiz-result-actions">
           <button type="button" class="action-btn action-btn--primary" data-go="${city.id}">Take me there</button>
-          <button type="button" class="heart" data-save-city="${city.id}" aria-pressed="${isCitySaved(city.id)}" aria-label="${isCitySaved(city.id) ? 'Remove' : 'Save'} ${esc(city.name)}">
+          <button type="button" class="heart" data-save-city="${city.id}" aria-pressed="${isCitySaved(city.id)}" aria-label="${isCitySaved(city.id) ? 'Remove' : 'Save'} ${esc(city.name)}" title="${isCitySaved(city.id) ? 'Remove from' : 'Save to'} Want to go">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" /></svg>
           </button>
         </div>
@@ -1255,7 +1256,7 @@ function renderPlaces() {
     <li class="place" data-place-row="${p.id}">
       <div class="place-main">
         <button type="button" class="place-name" data-place="${p.id}" aria-expanded="false" aria-controls="detail-${p.id}"><span class="place-num" aria-hidden="true">${i + 1}</span>${esc(p.name)}</button>
-        <button type="button" class="heart" data-save-place="${p.id}" aria-pressed="${isPlaceSaved(p.id)}" aria-label="${isPlaceSaved(p.id) ? 'Remove' : 'Save'} ${esc(p.name)}">
+        <button type="button" class="heart" data-save-place="${p.id}" aria-pressed="${isPlaceSaved(p.id)}" aria-label="${isPlaceSaved(p.id) ? 'Remove' : 'Save'} ${esc(p.name)}" title="${isPlaceSaved(p.id) ? 'Remove from' : 'Save to'} Want to go">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" /></svg>
         </button>
         <a class="place-maps" href="${mapsUrlForPlace(p)}" target="_blank" rel="noopener" aria-label="Open ${esc(p.name)} in Google Maps">↗</a>

@@ -1831,3 +1831,15 @@ dialog.is-open::backdrop { opacity: 1; }
 .planet-content { pointer-events: none; }
 .planet-content > * { pointer-events: auto; }
 .experience.is-transitioning .planet-content > * { pointer-events: none; }
+
+/* The oversized title's line box reaches up over the kicker row; keep the row clickable. */
+.kicker-row, .gallery, .local-now, .photo-credit { position: relative; z-index: 1; }
+
+/* Saved toggles say what a second click does. */
+.save-city[aria-pressed="true"]:hover .save-label-default,
+.save-city[aria-pressed="true"]:focus-visible .save-label-default { display: none; }
+.save-city .save-label-remove { display: none; }
+.save-city[aria-pressed="true"]:hover .save-label-remove,
+.save-city[aria-pressed="true"]:focus-visible .save-label-remove { display: inline; }
+.save-city[aria-pressed="true"]:hover { background: rgba(255, 255, 255, .85); }
+.heart[aria-pressed="true"]:hover svg { fill: none; }
