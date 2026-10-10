@@ -59,6 +59,10 @@
       <p class="list-heading" id="list-heading"></p>
       <ol class="planet-items" id="city-list"></ol>
       <p class="progress-label" id="progress-label"></p>
+      <button class="quiz-open" type="button" data-open="quiz" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z" /></svg>
+        Where should I go?
+      </button>
     </nav>
 
     <section class="portal-wrap chrome" aria-label="Next destination">
@@ -87,6 +91,7 @@
       <div class="title-block">
         <div class="gallery" id="gallery" role="group" aria-label="Photos"></div>
         <p class="photo-credit" id="photo-credit"></p>
+        <p class="local-now" id="local-now" aria-live="off"></p>
         <div class="kicker-row">
           <p class="city-kicker" id="city-kicker"></p>
           <button class="save-city" id="save-city" type="button" aria-pressed="false">
@@ -146,6 +151,28 @@
     </div>
   </dialog>
 
+  <dialog class="modal" id="dialog-quiz" aria-labelledby="quiz-title">
+    <div class="modal-card modal-card--wide">
+      <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+      <h2 class="modal-title" id="quiz-title">Where should I go?</h2>
+      <p class="modal-body">Pick what you love and when you can travel — your matches update as you choose.</p>
+      <fieldset class="quiz-step">
+        <legend>1 · What do you love? <span>Pick any</span></legend>
+        <div class="chips" id="quiz-interests"></div>
+      </fieldset>
+      <fieldset class="quiz-step">
+        <legend>2 · When are you going?</legend>
+        <div class="chips chips--months" id="quiz-months"></div>
+      </fieldset>
+      <fieldset class="quiz-step">
+        <legend>3 · Anywhere in particular? <span>Optional</span></legend>
+        <div class="chips" id="quiz-regions"></div>
+      </fieldset>
+      <h3 class="group-title" id="quiz-results-title">Your top matches</h3>
+      <ol class="quiz-results" id="quiz-results" aria-labelledby="quiz-results-title"></ol>
+    </div>
+  </dialog>
+
   <dialog class="modal" id="dialog-saved" aria-labelledby="saved-title">
     <div class="modal-card modal-card--wide">
       <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
@@ -164,6 +191,7 @@
           <button class="modal-close modal-close--static" type="button" data-close aria-label="Close menu">&times;</button>
         </div>
         <nav class="drawer-nav" aria-label="Site">
+          <button type="button" data-open="quiz">Where should I go? <span aria-hidden="true">&rarr;</span></button>
           <button type="button" data-open="destinations">All cities <span aria-hidden="true">&rarr;</span></button>
           <button type="button" data-open="saved">Want to go <span aria-hidden="true">&rarr;</span></button>
           <button type="button" id="drawer-map">Map <span aria-hidden="true">&rarr;</span></button>

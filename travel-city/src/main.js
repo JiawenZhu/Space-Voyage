@@ -3,6 +3,7 @@ import {
   hasMapsKey, initMap, isMapReady, showCity, flyBetween, recordVisit, fetchPlaceDetails,
   focusPlace, cityPlaces, cityCenter, mapsUrlForPlace, mapsUrlForCity
 } from './map.js';
+import { interests, MONTHS, rankCities } from './match.js';
 
 const byId = Object.fromEntries(cities.map((c) => [c.id, c]));
 const countryById = Object.fromEntries(countries.map((c) => [c.id, c]));
@@ -58,6 +59,7 @@ const dialogs = {
   about: $('#dialog-about'),
   destinations: $('#dialog-destinations'),
   saved: $('#dialog-saved'),
+  quiz: $('#dialog-quiz'),
   menu: $('#dialog-menu')
 };
 
@@ -211,6 +213,7 @@ function render() {
   renderGallery();
   renderSavedState();
   renderPlaces();
+  renderLocalNow();
   fitTitle();
 
   cityListNav.classList.remove('is-switching');
@@ -1102,6 +1105,138 @@ function openSharedTrip() {
   renderSavedDialog();
   openDialog(dialogs.saved);
 }
+
+/* ---------- Where should I go? ---------- */
+
+const quiz = { picks: [], month: null, regions: [] };
+const quizInterests = $('#quiz-interests');
+const quizMonths = $('#quiz-months');
+const quizRegions = $('#quiz-regions');
+const quizResults = $('#quiz-results');
+
+function chip(attr, value, label, pressed, extra = '') {
+  return `<button type="button" class="chip" ${attr}="${value}" aria-pressed="${pressed}">${label}${extra}</button>`;
+}
+
+function renderQuiz() {
+  quizInterests.innerHTML = interests
+    .map((i) => chip('data-pick', i.id, esc(i.label), quiz.picks.includes(i.id), ` <span lang="zh">${i.local}</span>`))
+    .join('');
+  quizMonths.innerHTML = chip('data-month', 'any', 'Any time', quiz.month === null)
+    + MONTHS.map((m, i) => chip('data-month', i, m, quiz.month === i)).join('');
+  quizRegions.innerHTML = countries
+    .filter((c) => c.available)
+    .map((c) => chip('data-region', c.id, esc(c.name), quiz.regions.includes(c.id), ` <span lang="zh">${c.local}</span>`))
+    .join('');
+
+  const empty = !quiz.picks.length && quiz.month === null;
+  const ranked = rankCities(cities, quiz).filter((r) => empty || r.score > 0).slice(0, 3);
+  quizResults.innerHTML = empty
+    ? '<li class="quiz-empty">Choose an interest or a month to see your matches.</li>'
+    : ranked.length
+    ? ranked.map(({ city, percent, reasons }, i) => `
+      <li class="quiz-result">
+        <img src="${city.photos[0].thumb}" alt="" />
+        <div class="quiz-result-text">
+          <p class="quiz-rank">#${i + 1} · ${percent}% match</p>
+          <h4>${esc(city.name)} <span lang="zh">${city.local}</span> <small>${esc(city.nation)}</small></h4>
+          <p class="quiz-reasons">${reasons.map(esc).join(' · ') || esc(city.tagline)}</p>
+        </div>
+        <div class="quiz-result-actions">
+          <button type="button" class="action-btn action-btn--primary" data-go="${city.id}">Take me there</button>
+          <button type="button" class="heart" data-save-city="${city.id}" aria-pressed="${isCitySaved(city.id)}" aria-label="${isCitySaved(city.id) ? 'Remove' : 'Save'} ${esc(city.name)}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" /></svg>
+          </button>
+        </div>
+      </li>`).join('')
+    : '<li class="quiz-empty">No city fits all of that — try another month or region.</li>';
+}
+
+dialogs.quiz.addEventListener('click', (e) => {
+  const pick = e.target.closest('[data-pick]');
+  const month = e.target.closest('[data-month]');
+  const region = e.target.closest('[data-region]');
+  const go = e.target.closest('[data-go]');
+  const save = e.target.closest('[data-save-city]');
+  const toggle = (list, v) => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
+  if (pick) quiz.picks = toggle(quiz.picks, pick.dataset.pick);
+  else if (month) quiz.month = month.dataset.month === 'any' ? null : Number(month.dataset.month);
+  else if (region) quiz.regions = toggle(quiz.regions, region.dataset.region);
+  else if (save) toggleCity(save.dataset.saveCity);
+  else if (go) {
+    closeDialog(dialogs.quiz);
+    navigate(go.dataset.go);
+    return;
+  } else return;
+  const focusKey = [...e.target.closest('button').attributes].find((a) => a.name.startsWith('data-'));
+  renderQuiz();
+  // Keep keyboard focus on the chip that was just toggled.
+  if (focusKey) dialogs.quiz.querySelector(`[${focusKey.name}="${CSS.escape(focusKey.value)}"]`)?.focus();
+});
+
+document.querySelectorAll('[data-open="quiz"]').forEach((b) => b.addEventListener('click', () => renderQuiz()));
+
+/* ---------- Local time and weather (Open-Meteo, free, no key) ---------- */
+
+const localNow = $('#local-now');
+const weatherCache = new Map();
+const WEATHER_TTL = 15 * 60 * 1000;
+
+// WMO weather codes → short label and symbol.
+function describeWeather(code, isDay) {
+  if (code === 0) return [isDay ? '☀︎' : '☾', 'Clear'];
+  if (code <= 2) return [isDay ? '⛅︎' : '☁︎', 'Partly cloudy'];
+  if (code === 3) return ['☁︎', 'Overcast'];
+  if (code <= 48) return ['〰︎', 'Fog'];
+  if (code <= 57) return ['☂︎', 'Drizzle'];
+  if (code <= 67) return ['☂︎', 'Rain'];
+  if (code <= 77) return ['❄︎', 'Snow'];
+  if (code <= 82) return ['☂︎', 'Showers'];
+  if (code <= 86) return ['❄︎', 'Snow showers'];
+  return ['⚡︎', 'Thunderstorm'];
+}
+
+async function fetchWeather(cityId) {
+  const hit = weatherCache.get(cityId);
+  if (hit && Date.now() - hit.at < WEATHER_TTL) return hit.data;
+  const c = cityCenter(cityId);
+  if (!c) return null;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lng}&current=temperature_2m,weather_code,is_day&timezone=auto`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`weather ${res.status}`);
+  const data = await res.json();
+  weatherCache.set(cityId, { at: Date.now(), data });
+  return data;
+}
+
+function formatLocalTime(timeZone) {
+  try {
+    return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone }).format(new Date());
+  } catch {
+    return null;
+  }
+}
+
+async function renderLocalNow() {
+  const cityId = current;
+  try {
+    const w = await fetchWeather(cityId);
+    if (cityId !== current || !w) return;
+    const time = formatLocalTime(w.timezone);
+    const [icon, label] = describeWeather(w.current.weather_code, w.current.is_day);
+    const temp = Math.round(w.current.temperature_2m);
+    localNow.innerHTML = `<span class="local-time">${time ?? ''}</span> local time <span aria-hidden="true">·</span> <span aria-hidden="true">${icon}</span> ${temp} °C ${label}`;
+    localNow.dataset.tz = w.timezone;
+  } catch {
+    if (cityId === current) localNow.textContent = `Local time ${byId[cityId].stats.time}`;
+  }
+}
+
+// Tick the clock once a minute while the page is visible.
+setInterval(() => {
+  const el = localNow.querySelector('.local-time');
+  if (!document.hidden && el && localNow.dataset.tz) el.textContent = formatLocalTime(localNow.dataset.tz);
+}, 30000);
 
 /* ---------- Map panel ---------- */
 
