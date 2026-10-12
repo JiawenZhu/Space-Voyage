@@ -113,6 +113,7 @@ let busy = true; // until the intro finishes
 
 function navigate(id) {
   if (!byId[id]) return;
+  applyNavigationSelection(id);
   if (location.hash === '#' + id) requestTravel(id);
   else location.hash = id;
 }
@@ -139,8 +140,8 @@ function setStatus(text, visible) {
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
 
-function cityItem(city, i) {
-  const active = city.id === current;
+function cityItem(city, i, activeId = (travellingTo || current)) {
+  const active = city.id === activeId;
   const mark = visited.has(city.id) && !active
     ? '<span class="visited-mark" title="Visited"></span><span class="visually-hidden">(visited)</span>'
     : '';
@@ -148,6 +149,72 @@ function cityItem(city, i) {
     ? `<span class="item-local"${city.lang ? ` lang="${city.lang}"` : ''}>${esc(city.local)}</span>`
     : '';
   return `<li style="--i:${i}"><button type="button" class="planet-item${active ? ' is-active' : ''}" data-city="${city.id}"${active ? ' aria-current="true"' : ''}><span class="planet-num" aria-hidden="true">${cityNumber(city)}</span><span>${esc(city.name)}</span>${localTag}${mark}</button></li>`;
+}
+
+function applyNavigationSelection(targetId) {
+  const target = byId[targetId];
+  if (!target) return;
+  const targetCountry = countryById[target.country];
+
+  // 1. Immediately update top continent/country nav
+  const countryBtns = countryNav.querySelectorAll('[data-country]');
+  countryBtns.forEach((btn) => {
+    const isSelected = btn.dataset.country === target.country;
+    const wasSelected = btn.getAttribute('aria-pressed') === 'true';
+    btn.setAttribute('aria-pressed', String(isSelected));
+    if (isSelected && !wasSelected) {
+      btn.classList.remove('nav-pop');
+      void btn.offsetWidth;
+      btn.classList.add('nav-pop');
+    }
+  });
+
+  // 2. Immediately update left sidebar city list
+  const isDifferentCountry = cityList.dataset.country !== target.country;
+  if (isDifferentCountry || !cityList.children.length) {
+    cityList.dataset.country = target.country;
+    const list = citiesOf(target.country);
+    listHeading.textContent = `${targetCountry.name} · ${list.length} cities`;
+    listHeading.classList.remove('heading-glide');
+    void listHeading.offsetWidth;
+    listHeading.classList.add('heading-glide');
+
+    cityList.innerHTML = list.map((c, i) => cityItem(c, i, targetId)).join('');
+    cityListNav.classList.remove('is-switching');
+    void cityListNav.offsetWidth;
+    cityListNav.classList.add('is-switching');
+  } else {
+    // Within the same country: spring to the new item immediately
+    const items = cityList.querySelectorAll('.planet-item');
+    items.forEach((btn) => {
+      const isActive = btn.dataset.city === targetId;
+      const wasActive = btn.classList.contains('is-active');
+      btn.classList.toggle('is-active', isActive);
+      if (isActive) {
+        btn.setAttribute('aria-current', 'true');
+        if (!wasActive) {
+          btn.classList.remove('item-active-spring');
+          void btn.offsetWidth;
+          btn.classList.add('item-active-spring');
+          const num = btn.querySelector('.planet-num');
+          if (num) {
+            num.classList.remove('is-active-dot-pop');
+            void num.offsetWidth;
+            num.classList.add('is-active-dot-pop');
+          }
+        }
+      } else {
+        btn.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  // 3. Immediately update portal preview caption for next target
+  const next = byId[neighbour(targetId, 1)];
+  if (next) {
+    nextName.textContent = next.name;
+    nextNumber.textContent = `[${cityNumber(next)}]`;
+  }
 }
 
 function render() {
@@ -180,14 +247,46 @@ function render() {
     .join('');
   factsList.innerHTML = city.facts.map(([k, v]) => `<div class="fact"><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('');
 
-  countryNav.innerHTML = countries
-    .filter((c) => c.available)
-    .map((c) => `<button type="button" data-country="${c.id}" aria-pressed="${c.id === city.country}" title="${[c.name, c.local].filter(Boolean).join(' ')}">${c.short}</button>`)
-    .join('');
+  if (!countryNav.children.length) {
+    countryNav.innerHTML = countries
+      .filter((c) => c.available)
+      .map((c) => `<button type="button" data-country="${c.id}" aria-pressed="${c.id === city.country}" title="${[c.name, c.local].filter(Boolean).join(' ')}">${c.short}</button>`)
+      .join('');
+  } else {
+    countryNav.querySelectorAll('[data-country]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.country === city.country));
+    });
+  }
 
   const list = citiesOf(city.country);
   listHeading.textContent = `${country.name} · ${list.length} cities`;
-  cityList.innerHTML = list.map(cityItem).join('');
+  const isDifferentCountry = cityList.dataset.country !== city.country;
+  if (isDifferentCountry || !cityList.children.length) {
+    cityList.dataset.country = city.country;
+    cityList.innerHTML = list.map((c, i) => cityItem(c, i, current)).join('');
+    cityListNav.classList.remove('is-switching');
+    void cityListNav.offsetWidth;
+    cityListNav.classList.add('is-switching');
+  } else {
+    cityList.querySelectorAll('.planet-item').forEach((btn) => {
+      const id = btn.dataset.city;
+      const isActive = id === current;
+      btn.classList.toggle('is-active', isActive);
+      if (isActive) {
+        btn.setAttribute('aria-current', 'true');
+        const vm = btn.querySelector('.visited-mark');
+        if (vm) vm.remove();
+      } else {
+        btn.removeAttribute('aria-current');
+        if (visited.has(id) && !btn.querySelector('.visited-mark')) {
+          const span = document.createElement('span');
+          span.className = 'visited-mark';
+          span.title = 'Visited';
+          btn.appendChild(span);
+        }
+      }
+    });
+  }
 
   drawerGroups.innerHTML = countries
     .map((c) => c.available
@@ -224,10 +323,6 @@ function render() {
   renderPlaces();
   renderLocalNow();
   fitTitle();
-
-  cityListNav.classList.remove('is-switching');
-  void cityListNav.offsetWidth;
-  cityListNav.classList.add('is-switching');
 }
 
 // Long names (San Francisco, Washington, D.C.) shrink to fit the space beside the guide.
@@ -597,6 +692,7 @@ async function travel(targetId) {
   const target = byId[targetId];
   busy = true;
   travellingTo = targetId;
+  applyNavigationSelection(targetId);
   experience.classList.add('is-busy');
   targetX = 0;
   targetY = 0;
@@ -672,6 +768,7 @@ async function travel(targetId) {
     await revealPortal();
   } catch (err) {
     console.error(err);
+    applyNavigationSelection(current);
     transitionActive = false;
     expansion = 0;
     maskScale = 1;
@@ -762,7 +859,7 @@ document.addEventListener('visibilitychange', () => {
 
 portal.addEventListener('click', () => {
   if (portalDocked) setPortalDocked(false);
-  else navigate(neighbour(current, 1));
+  else navigate(neighbour(travellingTo || current, 1));
 });
 portalClose.addEventListener('click', () => setPortalDocked(true));
 $('#focus-exit').addEventListener('click', () => setPortalDocked(false));
@@ -800,8 +897,8 @@ function applyFocusInert() {
 experience.classList.toggle('portal-docked', portalDocked);
 dockMix = portalDocked ? 1 : 0;
 applyFocusInert();
-nextBtn.addEventListener('click', () => navigate(neighbour(current, 1)));
-prevBtn.addEventListener('click', () => navigate(neighbour(current, -1)));
+nextBtn.addEventListener('click', () => navigate(neighbour(travellingTo || current, 1)));
+prevBtn.addEventListener('click', () => navigate(neighbour(travellingTo || current, -1)));
 
 floatingLogo.addEventListener('click', (e) => {
   e.preventDefault();
@@ -810,7 +907,8 @@ floatingLogo.addEventListener('click', (e) => {
 
 countryNav.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-country]');
-  if (btn && btn.dataset.country !== byId[current].country) navigate(citiesOf(btn.dataset.country)[0].id);
+  const activeCountry = byId[travellingTo || current]?.country;
+  if (btn && btn.dataset.country !== activeCountry) navigate(citiesOf(btn.dataset.country)[0].id);
 });
 
 [cityList, drawerGroups, destinationGroups].forEach((list) => {
@@ -836,10 +934,10 @@ document.addEventListener('keydown', (e) => {
   }
   if (e.key === 'ArrowRight') {
     e.preventDefault();
-    navigate(neighbour(current, 1));
+    navigate(neighbour(travellingTo || current, 1));
   } else if (e.key === 'ArrowLeft') {
     e.preventDefault();
-    navigate(neighbour(current, -1));
+    navigate(neighbour(travellingTo || current, -1));
   }
 });
 
@@ -858,7 +956,7 @@ experience.addEventListener('touchend', (e) => {
   const quick = performance.now() - touchStart.t < 700;
   touchStart = null;
   if (quick && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-    navigate(neighbour(current, dx < 0 ? 1 : -1));
+    navigate(neighbour(travellingTo || current, dx < 0 ? 1 : -1));
   }
 }, { passive: true });
 
