@@ -4,8 +4,8 @@ import videos from './videos.json';
 // Regions in display order (`short` is the header label). Add a region by appending here
 // and giving its cities the same `country` id.
 export const countries = [
+  { id: 'usa', name: 'USA', short: 'USA', local: '', available: true },
   { id: 'china', name: 'China', short: 'China', local: '中国', available: true },
-  { id: 'usa', name: 'USA', short: 'USA', local: '美国', available: true },
   { id: 'east-asia', name: 'East Asia', short: 'East Asia', local: '东亚', available: true },
   { id: 'southeast-asia', name: 'Southeast Asia', short: 'SE Asia', local: '东南亚', available: true },
   { id: 'europe', name: 'Europe', short: 'Europe', local: '欧洲', available: true },
@@ -16,104 +16,9 @@ export const countries = [
 // Sources: Wikipedia city articles (population, history) checked October 2026.
 // `nation` defaults to the region name for single-country regions.
 const cityData = [
+  // USA
   {
-    id: 'beijing', country: 'china', name: 'Beijing', local: '北京',
-    tagline: 'The imperial capital',
-    intro: 'China’s capital for most of the past eight centuries, Beijing pairs vast imperial palaces and quiet hutong alleys with the Great Wall winding through the hills to the north.',
-    stats: { population: '21.8M', region: 'Municipality', time: 'UTC+8', best: 'Sep–Oct' },
-    facts: [
-      ['Must-see', 'Forbidden City, Temple of Heaven, Summer Palace and the Great Wall at Mutianyu.'],
-      ['Must-eat', 'Peking roast duck, zhajiangmian noodles and street-side jianbing.'],
-      ['Getting around', 'One of the world’s largest metro networks reaches almost every sight.'],
-      ['Tip', 'Book Forbidden City tickets online in advance — it is closed on Mondays.']
-    ]
-  },
-  {
-    id: 'xian', country: 'china', name: 'Xi’an', local: '西安',
-    tagline: 'Where the Silk Road began',
-    intro: 'Capital of thirteen dynasties and the eastern end of the Silk Road, Xi’an is home to the Terracotta Army and one of the best-preserved city walls in China.',
-    stats: { population: '13.2M', region: 'Shaanxi', time: 'UTC+8', best: 'Apr–May' },
-    facts: [
-      ['Must-see', 'Terracotta Army, the City Wall by bike, the Bell and Drum Towers, Big Wild Goose Pagoda.'],
-      ['Must-eat', 'Roujiamo, biangbiang noodles and yangrou paomo in the Muslim Quarter.'],
-      ['Getting around', 'Metro and buses in town; tourist bus 5 (306) runs to the Terracotta Army.'],
-      ['Tip', 'Cycle the 14 km wall at sunset, then walk to the Muslim Quarter for dinner.']
-    ]
-  },
-  {
-    id: 'shanghai', country: 'china', name: 'Shanghai', local: '上海',
-    tagline: 'Where the Bund meets the future',
-    intro: 'China’s largest city faces itself across the Huangpu River: colonial-era banks along the Bund on one side, the glittering towers of Lujiazui on the other.',
-    stats: { population: '24.9M', region: 'Municipality', time: 'UTC+8', best: 'Apr–May' },
-    facts: [
-      ['Must-see', 'The Bund at night, Shanghai Tower, Yuyuan Garden and the plane-tree streets of the former French Concession.'],
-      ['Must-eat', 'Xiaolongbao soup dumplings and pan-fried shengjianbao.'],
-      ['Getting around', 'The world’s longest metro network, plus the 431 km/h Maglev to Pudong Airport.'],
-      ['Tip', 'Cross the river on the ferry for the cheapest skyline view in town.']
-    ]
-  },
-  {
-    id: 'chongqing', country: 'china', name: 'Chongqing', local: '重庆',
-    tagline: 'The 8D mountain city',
-    intro: 'Built on steep hills where the Yangtze and Jialing rivers meet, Chongqing stacks streets, bridges and monorails on top of each other — and is famous for its fiery hot pot.',
-    stats: { population: '32M', region: 'Municipality', time: 'UTC+8', best: 'Mar–May' },
-    facts: [
-      ['Must-see', 'Hongya Cave at night, the Liziba monorail that runs through a building, the Yangtze River cableway.'],
-      ['Must-eat', 'Chongqing hot pot and xiaomian spicy noodles.'],
-      ['Getting around', 'Monorail and metro; a ground floor here can be the 20th floor next door.'],
-      ['Tip', 'Summers are among China’s hottest — spring and autumn are far more comfortable.']
-    ]
-  },
-  {
-    id: 'shenzhen', country: 'china', name: 'Shenzhen', local: '深圳',
-    tagline: 'From fishing villages to tech capital',
-    intro: 'China’s first special economic zone grew from a cluster of villages in 1980 into a city of 18 million — the world’s hardware workshop, right across the border from Hong Kong.',
-    stats: { population: '18.2M', region: 'Guangdong', time: 'UTC+8', best: 'Oct–Dec' },
-    facts: [
-      ['Must-see', 'Huaqiangbei electronics markets, Shenzhen Bay Park, Ping An Finance Center, OCT Loft.'],
-      ['Must-eat', 'Cantonese dim sum and Chaoshan beef hot pot.'],
-      ['Getting around', 'A fast, modern metro; high-speed trains reach Hong Kong in under 20 minutes.'],
-      ['Tip', 'Walk the Shenzhen Bay coastline at sunset for views over to Hong Kong.']
-    ]
-  },
-  {
-    id: 'chengdu', country: 'china', name: 'Chengdu', local: '成都',
-    tagline: 'Pandas, teahouses and spice',
-    intro: 'Sichuan’s relaxed capital is home to the Giant Panda Breeding Research Base, a deep-rooted teahouse culture and some of China’s boldest cooking.',
-    stats: { population: '20.9M', region: 'Sichuan', time: 'UTC+8', best: 'Mar–Jun' },
-    facts: [
-      ['Must-see', 'Giant Panda Base (go early), Kuanzhai Alley, Jinli Street, Wenshu Monastery.'],
-      ['Must-eat', 'Mapo tofu, Sichuan hot pot and dan dan noodles.'],
-      ['Getting around', 'Metro across the city; fast trains to Chongqing in about an hour.'],
-      ['Tip', 'Sip tea and try an ear-cleaning in People’s Park — a Chengdu classic.']
-    ]
-  },
-  {
-    id: 'suzhou', country: 'china', name: 'Suzhou', local: '苏州',
-    tagline: 'Gardens and canals',
-    intro: 'Laced with canals along the Grand Canal, Suzhou is famous for its UNESCO-listed classical gardens, silk and Kunqu opera — long praised as “paradise on earth”.',
-    stats: { population: '12.7M', region: 'Jiangsu', time: 'UTC+8', best: 'Apr–May' },
-    facts: [
-      ['Must-see', 'Humble Administrator’s Garden, Lingering Garden, Pingjiang Road, Tiger Hill.'],
-      ['Must-eat', 'Squirrel-shaped mandarin fish and a bowl of Suzhou noodles.'],
-      ['Getting around', 'About 25 minutes from Shanghai by high-speed train; metro and canal boats in town.'],
-      ['Tip', 'Visit the gardens at opening time, before the tour groups arrive.']
-    ]
-  },
-  {
-    id: 'guilin', country: 'china', name: 'Guilin', local: '桂林',
-    tagline: 'The finest landscape under heaven',
-    intro: 'Named for its sweet osmanthus trees, Guilin sits on the Li River among hundreds of karst peaks — the scenery printed on China’s 20-yuan note.',
-    stats: { population: '4.9M', region: 'Guangxi', time: 'UTC+8', best: 'Sep–Oct' },
-    facts: [
-      ['Must-see', 'Li River cruise to Yangshuo, Elephant Trunk Hill, Reed Flute Cave, Longji rice terraces.'],
-      ['Must-eat', 'Guilin rice noodles and Yangshuo beer fish.'],
-      ['Getting around', 'Boats and bamboo rafts on the river; bikes and scooters around Yangshuo.'],
-      ['Tip', 'Stay a night in Yangshuo and cycle the Yulong River valley.']
-    ]
-  },
-  {
-    id: 'new-york', country: 'usa', name: 'New York', local: '纽约',
+    id: 'new-york', country: 'usa', name: 'New York', local: '',
     tagline: 'The city that never sleeps',
     intro: 'America’s largest city spreads across five boroughs around one of the world’s great natural harbors — a global capital of finance, art, theatre and food.',
     stats: { population: '8.8M', region: 'New York', time: 'UTC−5', best: 'Apr–Jun' },
@@ -125,7 +30,7 @@ const cityData = [
     ]
   },
   {
-    id: 'orlando', country: 'usa', name: 'Orlando', local: '奥兰多',
+    id: 'orlando', country: 'usa', name: 'Orlando', local: '',
     tagline: 'Theme park capital of the world',
     intro: 'Central Florida’s sunny hub is home to Walt Disney World and Universal Orlando, with lakes, springs and the Space Coast all within easy reach.',
     stats: { population: '2.7M metro', region: 'Florida', time: 'UTC−5', best: 'Mar–May' },
@@ -137,7 +42,7 @@ const cityData = [
     ]
   },
   {
-    id: 'chicago', country: 'usa', name: 'Chicago', local: '芝加哥',
+    id: 'chicago', country: 'usa', name: 'Chicago', local: '',
     tagline: 'The Windy City',
     intro: 'Rising on the shore of Lake Michigan, Chicago is the birthplace of the skyscraper — best seen from a boat on its architecture river tours.',
     stats: { population: '2.7M', region: 'Illinois', time: 'UTC−6', best: 'May–Oct' },
@@ -149,7 +54,7 @@ const cityData = [
     ]
   },
   {
-    id: 'new-orleans', country: 'usa', name: 'New Orleans', local: '新奥尔良',
+    id: 'new-orleans', country: 'usa', name: 'New Orleans', local: '',
     tagline: 'The birthplace of jazz',
     intro: 'On a bend of the Mississippi, New Orleans blends French, Spanish, African and Caribbean roots into its music, its iron-lace architecture and its Creole cooking.',
     stats: { population: '384K', region: 'Louisiana', time: 'UTC−6', best: 'Feb–May' },
@@ -161,7 +66,7 @@ const cityData = [
     ]
   },
   {
-    id: 'san-francisco', country: 'usa', name: 'San Francisco', local: '旧金山',
+    id: 'san-francisco', country: 'usa', name: 'San Francisco', local: '',
     tagline: 'The City by the Bay',
     intro: 'Steep hills, fog and the Golden Gate Bridge define San Francisco, a compact city of cable cars, Victorian houses and world-class food.',
     stats: { population: '826K', region: 'California', time: 'UTC−8', best: 'Sep–Oct' },
@@ -173,7 +78,7 @@ const cityData = [
     ]
   },
   {
-    id: 'washington', country: 'usa', name: 'Washington, D.C.', local: '华盛顿',
+    id: 'washington', country: 'usa', name: 'Washington, D.C.', local: '',
     tagline: 'The nation’s capital',
     intro: 'America’s capital is built around the National Mall, lined with monuments, memorials and the Smithsonian museums — almost all of them free to visit.',
     stats: { population: '690K', region: 'D.C.', time: 'UTC−5', best: 'Late Mar–Apr' },
@@ -185,7 +90,7 @@ const cityData = [
     ]
   },
   {
-    id: 'nashville', country: 'usa', name: 'Nashville', local: '纳什维尔',
+    id: 'nashville', country: 'usa', name: 'Nashville', local: '',
     tagline: 'Music City',
     intro: 'Tennessee’s capital on the Cumberland River is the home of country music, with live bands playing from late morning to the small hours on Lower Broadway.',
     stats: { population: '689K', region: 'Tennessee', time: 'UTC−6', best: 'Apr–May' },
@@ -197,7 +102,7 @@ const cityData = [
     ]
   },
   {
-    id: 'las-vegas', country: 'usa', name: 'Las Vegas', local: '拉斯维加斯',
+    id: 'las-vegas', country: 'usa', name: 'Las Vegas', local: '',
     tagline: 'Entertainment capital of the world',
     intro: 'Rising out of the Mojave Desert, Las Vegas is a non-stop resort city of casinos, shows and dining — with red-rock canyons and the Hoover Dam a short drive away.',
     stats: { population: '642K', region: 'Nevada', time: 'UTC−8', best: 'Mar–May' },
@@ -207,11 +112,107 @@ const cityData = [
       ['Getting around', 'Walk the Strip, take the Monorail, or drive out to the desert.'],
       ['Tip', 'Summer days pass 40 °C — spring and autumn are best for hiking nearby.']
     ]
-  }
-,
+  },
+  // China
+  {
+    id: 'beijing', country: 'china', name: 'Beijing', local: '北京', lang: 'zh',
+    tagline: 'The imperial capital',
+    intro: 'China’s capital for most of the past eight centuries, Beijing pairs vast imperial palaces and quiet hutong alleys with the Great Wall winding through the hills to the north.',
+    stats: { population: '21.8M', region: 'Municipality', time: 'UTC+8', best: 'Sep–Oct' },
+    facts: [
+      ['Must-see', 'Forbidden City, Temple of Heaven, Summer Palace and the Great Wall at Mutianyu.'],
+      ['Must-eat', 'Peking roast duck, zhajiangmian noodles and street-side jianbing.'],
+      ['Getting around', 'One of the world’s largest metro networks reaches almost every sight.'],
+      ['Tip', 'Book Forbidden City tickets online in advance — it is closed on Mondays.']
+    ]
+  },
+  {
+    id: 'xian', country: 'china', name: 'Xi’an', local: '西安', lang: 'zh',
+    tagline: 'Where the Silk Road began',
+    intro: 'Capital of thirteen dynasties and the eastern end of the Silk Road, Xi’an is home to the Terracotta Army and one of the best-preserved city walls in China.',
+    stats: { population: '13.2M', region: 'Shaanxi', time: 'UTC+8', best: 'Apr–May' },
+    facts: [
+      ['Must-see', 'Terracotta Army, the City Wall by bike, the Bell and Drum Towers, Big Wild Goose Pagoda.'],
+      ['Must-eat', 'Roujiamo, biangbiang noodles and yangrou paomo in the Muslim Quarter.'],
+      ['Getting around', 'Metro and buses in town; tourist bus 5 (306) runs to the Terracotta Army.'],
+      ['Tip', 'Cycle the 14 km wall at sunset, then walk to the Muslim Quarter for dinner.']
+    ]
+  },
+  {
+    id: 'shanghai', country: 'china', name: 'Shanghai', local: '上海', lang: 'zh',
+    tagline: 'Where the Bund meets the future',
+    intro: 'China’s largest city faces itself across the Huangpu River: colonial-era banks along the Bund on one side, the glittering towers of Lujiazui on the other.',
+    stats: { population: '24.9M', region: 'Municipality', time: 'UTC+8', best: 'Apr–May' },
+    facts: [
+      ['Must-see', 'The Bund at night, Shanghai Tower, Yuyuan Garden and the plane-tree streets of the former French Concession.'],
+      ['Must-eat', 'Xiaolongbao soup dumplings and pan-fried shengjianbao.'],
+      ['Getting around', 'The world’s longest metro network, plus the 431 km/h Maglev to Pudong Airport.'],
+      ['Tip', 'Cross the river on the ferry for the cheapest skyline view in town.']
+    ]
+  },
+  {
+    id: 'chongqing', country: 'china', name: 'Chongqing', local: '重庆', lang: 'zh',
+    tagline: 'The 8D mountain city',
+    intro: 'Built on steep hills where the Yangtze and Jialing rivers meet, Chongqing stacks streets, bridges and monorails on top of each other — and is famous for its fiery hot pot.',
+    stats: { population: '32M', region: 'Municipality', time: 'UTC+8', best: 'Mar–May' },
+    facts: [
+      ['Must-see', 'Hongya Cave at night, the Liziba monorail that runs through a building, the Yangtze River cableway.'],
+      ['Must-eat', 'Chongqing hot pot and xiaomian spicy noodles.'],
+      ['Getting around', 'Monorail and metro; a ground floor here can be the 20th floor next door.'],
+      ['Tip', 'Summers are among China’s hottest — spring and autumn are far more comfortable.']
+    ]
+  },
+  {
+    id: 'shenzhen', country: 'china', name: 'Shenzhen', local: '深圳', lang: 'zh',
+    tagline: 'From fishing villages to tech capital',
+    intro: 'China’s first special economic zone grew from a cluster of villages in 1980 into a city of 18 million — the world’s hardware workshop, right across the border from Hong Kong.',
+    stats: { population: '18.2M', region: 'Guangdong', time: 'UTC+8', best: 'Oct–Dec' },
+    facts: [
+      ['Must-see', 'Huaqiangbei electronics markets, Shenzhen Bay Park, Ping An Finance Center, OCT Loft.'],
+      ['Must-eat', 'Cantonese dim sum and Chaoshan beef hot pot.'],
+      ['Getting around', 'A fast, modern metro; high-speed trains reach Hong Kong in under 20 minutes.'],
+      ['Tip', 'Walk the Shenzhen Bay coastline at sunset for views over to Hong Kong.']
+    ]
+  },
+  {
+    id: 'chengdu', country: 'china', name: 'Chengdu', local: '成都', lang: 'zh',
+    tagline: 'Pandas, teahouses and spice',
+    intro: 'Sichuan’s relaxed capital is home to the Giant Panda Breeding Research Base, a deep-rooted teahouse culture and some of China’s boldest cooking.',
+    stats: { population: '20.9M', region: 'Sichuan', time: 'UTC+8', best: 'Mar–Jun' },
+    facts: [
+      ['Must-see', 'Giant Panda Base (go early), Kuanzhai Alley, Jinli Street, Wenshu Monastery.'],
+      ['Must-eat', 'Mapo tofu, Sichuan hot pot and dan dan noodles.'],
+      ['Getting around', 'Metro across the city; fast trains to Chongqing in about an hour.'],
+      ['Tip', 'Sip tea and try an ear-cleaning in People’s Park — a Chengdu classic.']
+    ]
+  },
+  {
+    id: 'suzhou', country: 'china', name: 'Suzhou', local: '苏州', lang: 'zh',
+    tagline: 'Gardens and canals',
+    intro: 'Laced with canals along the Grand Canal, Suzhou is famous for its UNESCO-listed classical gardens, silk and Kunqu opera — long praised as “paradise on earth”.',
+    stats: { population: '12.7M', region: 'Jiangsu', time: 'UTC+8', best: 'Apr–May' },
+    facts: [
+      ['Must-see', 'Humble Administrator’s Garden, Lingering Garden, Pingjiang Road, Tiger Hill.'],
+      ['Must-eat', 'Squirrel-shaped mandarin fish and a bowl of Suzhou noodles.'],
+      ['Getting around', 'About 25 minutes from Shanghai by high-speed train; metro and canal boats in town.'],
+      ['Tip', 'Visit the gardens at opening time, before the tour groups arrive.']
+    ]
+  },
+  {
+    id: 'guilin', country: 'china', name: 'Guilin', local: '桂林', lang: 'zh',
+    tagline: 'The finest landscape under heaven',
+    intro: 'Named for its sweet osmanthus trees, Guilin sits on the Li River among hundreds of karst peaks — the scenery printed on China’s 20-yuan note.',
+    stats: { population: '4.9M', region: 'Guangxi', time: 'UTC+8', best: 'Sep–Oct' },
+    facts: [
+      ['Must-see', 'Li River cruise to Yangshuo, Elephant Trunk Hill, Reed Flute Cave, Longji rice terraces.'],
+      ['Must-eat', 'Guilin rice noodles and Yangshuo beer fish.'],
+      ['Getting around', 'Boats and bamboo rafts on the river; bikes and scooters around Yangshuo.'],
+      ['Tip', 'Stay a night in Yangshuo and cycle the Yulong River valley.']
+    ]
+  },
   // East Asia — Japan and South Korea
   {
-    id: 'tokyo', country: 'east-asia', nation: 'Japan', name: 'Tokyo', local: '东京',
+    id: 'tokyo', country: 'east-asia', nation: 'Japan', name: 'Tokyo', local: '東京', lang: 'ja',
     tagline: 'Neon, shrines and endless neighbourhoods',
     intro: 'The world’s largest metropolitan area is really a patchwork of villages — from Shibuya’s famous crossing to the old temple streets of Asakusa.',
     stats: { population: '14M', region: 'Japan', time: 'UTC+9', best: 'Mar–May' },
@@ -223,7 +224,7 @@ const cityData = [
     ]
   },
   {
-    id: 'kyoto', country: 'east-asia', nation: 'Japan', name: 'Kyoto', local: '京都',
+    id: 'kyoto', country: 'east-asia', nation: 'Japan', name: 'Kyoto', local: '京都', lang: 'ja',
     tagline: 'Japan’s ancient capital',
     intro: 'Imperial capital for more than a thousand years, Kyoto keeps around 1,600 temples, wooden machiya townhouses and the geisha district of Gion.',
     stats: { population: '1.46M', region: 'Japan', time: 'UTC+9', best: 'Nov' },
@@ -235,7 +236,7 @@ const cityData = [
     ]
   },
   {
-    id: 'osaka', country: 'east-asia', nation: 'Japan', name: 'Osaka', local: '大阪',
+    id: 'osaka', country: 'east-asia', nation: 'Japan', name: 'Osaka', local: '大阪', lang: 'ja',
     tagline: 'Japan’s kitchen',
     intro: 'Loud, friendly and obsessed with food, Osaka lights up at night along the Dotonbori canal — the Japanese call it “kuidaore”, eat until you drop.',
     stats: { population: '2.75M', region: 'Japan', time: 'UTC+9', best: 'Mar–May' },
@@ -247,7 +248,7 @@ const cityData = [
     ]
   },
   {
-    id: 'nara', country: 'east-asia', nation: 'Japan', name: 'Nara', local: '奈良',
+    id: 'nara', country: 'east-asia', nation: 'Japan', name: 'Nara', local: '奈良', lang: 'ja',
     tagline: 'Deer, temples and giant Buddhas',
     intro: 'Japan’s first permanent capital is a calm, walkable city where over a thousand free-roaming deer bow for crackers outside Todai-ji’s Great Buddha.',
     stats: { population: '350K', region: 'Japan', time: 'UTC+9', best: 'Apr, Nov' },
@@ -259,7 +260,7 @@ const cityData = [
     ]
   },
   {
-    id: 'seoul', country: 'east-asia', nation: 'South Korea', name: 'Seoul', local: '首尔',
+    id: 'seoul', country: 'east-asia', nation: 'South Korea', name: 'Seoul', local: '서울', lang: 'ko',
     tagline: 'Palaces and pop culture',
     intro: 'South Korea’s capital wraps Joseon-era palaces and hanok villages inside a buzzing city of K-pop, night markets and late-night food.',
     stats: { population: '9.4M', region: 'South Korea', time: 'UTC+9', best: 'Apr–May' },
@@ -271,7 +272,7 @@ const cityData = [
     ]
   },
   {
-    id: 'busan', country: 'east-asia', nation: 'South Korea', name: 'Busan', local: '釜山',
+    id: 'busan', country: 'east-asia', nation: 'South Korea', name: 'Busan', local: '부산', lang: 'ko',
     tagline: 'Beaches, hills and seafood',
     intro: 'Korea’s second city and biggest port spreads between mountains and sea, with city beaches, hillside villages and the country’s largest fish market.',
     stats: { population: '3.3M', region: 'South Korea', time: 'UTC+9', best: 'May–Jun, Sep–Oct' },
@@ -284,7 +285,7 @@ const cityData = [
   },
   // Southeast Asia
   {
-    id: 'singapore', country: 'southeast-asia', nation: 'Singapore', name: 'Singapore', local: '新加坡',
+    id: 'singapore', country: 'southeast-asia', nation: 'Singapore', name: 'Singapore', local: 'Singapura', lang: 'ms',
     tagline: 'The garden city',
     intro: 'A tiny island nation that packs futuristic architecture, rainforest gardens and some of the world’s best street food into one spotless city.',
     stats: { population: '6M', region: 'Singapore', time: 'UTC+8', best: 'Feb–Apr' },
@@ -296,7 +297,7 @@ const cityData = [
     ]
   },
   {
-    id: 'bangkok', country: 'southeast-asia', nation: 'Thailand', name: 'Bangkok', local: '曼谷',
+    id: 'bangkok', country: 'southeast-asia', nation: 'Thailand', name: 'Bangkok', local: 'กรุงเทพฯ', lang: 'th',
     tagline: 'Temples and street food',
     intro: 'Thailand’s capital mixes gilded temples on the Chao Phraya River with rooftop bars, floating markets and endless street-food stalls.',
     stats: { population: '11M metro', region: 'Thailand', time: 'UTC+7', best: 'Nov–Feb' },
@@ -308,7 +309,7 @@ const cityData = [
     ]
   },
   {
-    id: 'chiang-mai', country: 'southeast-asia', nation: 'Thailand', name: 'Chiang Mai', local: '清迈',
+    id: 'chiang-mai', country: 'southeast-asia', nation: 'Thailand', name: 'Chiang Mai', local: 'เชียงใหม่', lang: 'th',
     tagline: 'The rose of the north',
     intro: 'Northern Thailand’s cultural capital sits in a moated old city with more than 300 temples, surrounded by mountains, night markets and elephant sanctuaries.',
     stats: { population: '1.2M metro', region: 'Thailand', time: 'UTC+7', best: 'Nov–Feb' },
@@ -320,7 +321,7 @@ const cityData = [
     ]
   },
   {
-    id: 'hanoi', country: 'southeast-asia', nation: 'Vietnam', name: 'Hanoi', local: '河内',
+    id: 'hanoi', country: 'southeast-asia', nation: 'Vietnam', name: 'Hanoi', local: 'Hà Nội', lang: 'vi',
     tagline: 'A thousand-year-old capital',
     intro: 'Vietnam’s capital blends French colonial boulevards, tranquil lakes and the chaotic, delicious lanes of the Old Quarter.',
     stats: { population: '8.5M', region: 'Vietnam', time: 'UTC+7', best: 'Oct–Apr' },
@@ -332,7 +333,7 @@ const cityData = [
     ]
   },
   {
-    id: 'kuala-lumpur', country: 'southeast-asia', nation: 'Malaysia', name: 'Kuala Lumpur', local: '吉隆坡',
+    id: 'kuala-lumpur', country: 'southeast-asia', nation: 'Malaysia', name: 'Kuala Lumpur', local: '',
     tagline: 'Twin towers and tropical streets',
     intro: 'Malaysia’s capital mixes Malay, Chinese and Indian cultures under the Petronas Twin Towers, once the tallest buildings in the world.',
     stats: { population: '2M', region: 'Malaysia', time: 'UTC+8', best: 'May–Jul' },
@@ -344,7 +345,7 @@ const cityData = [
     ]
   },
   {
-    id: 'siem-reap', country: 'southeast-asia', nation: 'Cambodia', name: 'Siem Reap', local: '暹粒',
+    id: 'siem-reap', country: 'southeast-asia', nation: 'Cambodia', name: 'Siem Reap', local: 'សៀមរាប', lang: 'km',
     tagline: 'Gateway to Angkor',
     intro: 'This relaxed riverside town is the base for exploring Angkor, the vast capital of the Khmer Empire and the largest religious monument on Earth.',
     stats: { population: '250K', region: 'Cambodia', time: 'UTC+7', best: 'Nov–Mar' },
@@ -357,7 +358,7 @@ const cityData = [
   },
   // Europe
   {
-    id: 'paris', country: 'europe', nation: 'France', name: 'Paris', local: '巴黎',
+    id: 'paris', country: 'europe', nation: 'France', name: 'Paris', local: '',
     tagline: 'The city of light',
     intro: 'Grand boulevards, riverside bridges and café terraces make Paris the archetype of a beautiful city — with the Louvre and the Eiffel Tower to match.',
     stats: { population: '2.1M', region: 'France', time: 'UTC+1', best: 'Apr–Jun, Sep–Oct' },
@@ -369,7 +370,7 @@ const cityData = [
     ]
   },
   {
-    id: 'london', country: 'europe', nation: 'United Kingdom', name: 'London', local: '伦敦',
+    id: 'london', country: 'europe', nation: 'United Kingdom', name: 'London', local: '',
     tagline: 'History on every corner',
     intro: 'Two thousand years of history line the Thames, from the Tower of London to Westminster — and most of the great museums are free.',
     stats: { population: '8.9M', region: 'United Kingdom', time: 'UTC+0', best: 'May–Sep' },
@@ -381,7 +382,7 @@ const cityData = [
     ]
   },
   {
-    id: 'rome', country: 'europe', nation: 'Italy', name: 'Rome', local: '罗马',
+    id: 'rome', country: 'europe', nation: 'Italy', name: 'Rome', local: 'Roma', lang: 'it',
     tagline: 'The eternal city',
     intro: 'Capital of an empire and home of the Vatican, Rome layers ancient ruins, Renaissance churches and baroque fountains through its lively streets.',
     stats: { population: '2.8M', region: 'Italy', time: 'UTC+1', best: 'Apr–Jun, Sep–Oct' },
@@ -393,7 +394,7 @@ const cityData = [
     ]
   },
   {
-    id: 'barcelona', country: 'europe', nation: 'Spain', name: 'Barcelona', local: '巴塞罗那',
+    id: 'barcelona', country: 'europe', nation: 'Spain', name: 'Barcelona', local: '',
     tagline: 'Gaudí by the sea',
     intro: 'Catalonia’s capital pairs Gaudí’s fantastical buildings with a medieval Gothic Quarter, city beaches and late, lively nights.',
     stats: { population: '1.7M', region: 'Spain', time: 'UTC+1', best: 'May–Jun, Sep' },
@@ -405,7 +406,7 @@ const cityData = [
     ]
   },
   {
-    id: 'amsterdam', country: 'europe', nation: 'Netherlands', name: 'Amsterdam', local: '阿姆斯特丹',
+    id: 'amsterdam', country: 'europe', nation: 'Netherlands', name: 'Amsterdam', local: '',
     tagline: 'Canals and bicycles',
     intro: 'Rings of 17th-century canals, narrow gabled houses and more bicycles than people make Amsterdam one of Europe’s most charming cities.',
     stats: { population: '930K', region: 'Netherlands', time: 'UTC+1', best: 'Apr–May' },
@@ -417,7 +418,7 @@ const cityData = [
     ]
   },
   {
-    id: 'prague', country: 'europe', nation: 'Czech Republic', name: 'Prague', local: '布拉格',
+    id: 'prague', country: 'europe', nation: 'Czech Republic', name: 'Prague', local: 'Praha', lang: 'cs',
     tagline: 'The city of a hundred spires',
     intro: 'Prague’s medieval centre survived almost untouched, with Charles Bridge leading over the Vltava to a vast hilltop castle.',
     stats: { population: '1.4M', region: 'Czech Republic', time: 'UTC+1', best: 'May–Sep' },
@@ -430,7 +431,7 @@ const cityData = [
   },
   // South America
   {
-    id: 'rio-de-janeiro', country: 'south-america', nation: 'Brazil', name: 'Rio de Janeiro', local: '里约热内卢',
+    id: 'rio-de-janeiro', country: 'south-america', nation: 'Brazil', name: 'Rio de Janeiro', local: '',
     tagline: 'The marvellous city',
     intro: 'Granite peaks, rainforest and famous beaches surround Rio, watched over by Christ the Redeemer from the top of Corcovado.',
     stats: { population: '6.2M', region: 'Brazil', time: 'UTC−3', best: 'Dec–Mar' },
@@ -442,7 +443,7 @@ const cityData = [
     ]
   },
   {
-    id: 'buenos-aires', country: 'south-america', nation: 'Argentina', name: 'Buenos Aires', local: '布宜诺斯艾利斯',
+    id: 'buenos-aires', country: 'south-america', nation: 'Argentina', name: 'Buenos Aires', local: '',
     tagline: 'Tango and grand avenues',
     intro: 'Argentina’s elegant capital is famous for its European-style boulevards, colourful La Boca, late dinners and tango danced in the street.',
     stats: { population: '3.1M', region: 'Argentina', time: 'UTC−3', best: 'Mar–May, Sep–Nov' },
@@ -454,7 +455,7 @@ const cityData = [
     ]
   },
   {
-    id: 'cusco', country: 'south-america', nation: 'Peru', name: 'Cusco', local: '库斯科',
+    id: 'cusco', country: 'south-america', nation: 'Peru', name: 'Cusco', local: 'Qosqo', lang: 'qu',
     tagline: 'Capital of the Inca Empire',
     intro: 'At 3,400 m in the Andes, Cusco’s colonial churches stand on Inca stone walls — and it is the gateway to Machu Picchu.',
     stats: { population: '430K', region: 'Peru', time: 'UTC−5', best: 'May–Sep' },
@@ -466,7 +467,7 @@ const cityData = [
     ]
   },
   {
-    id: 'lima', country: 'south-america', nation: 'Peru', name: 'Lima', local: '利马',
+    id: 'lima', country: 'south-america', nation: 'Peru', name: 'Lima', local: '',
     tagline: 'South America’s food capital',
     intro: 'Peru’s capital sits on cliffs above the Pacific, with a UNESCO-listed colonial centre and some of the most celebrated restaurants in the world.',
     stats: { population: '10M metro', region: 'Peru', time: 'UTC−5', best: 'Dec–Apr' },
@@ -478,7 +479,7 @@ const cityData = [
     ]
   },
   {
-    id: 'cartagena', country: 'south-america', nation: 'Colombia', name: 'Cartagena', local: '卡塔赫纳',
+    id: 'cartagena', country: 'south-america', nation: 'Colombia', name: 'Cartagena', local: '',
     tagline: 'Colour on the Caribbean',
     intro: 'Inside its stone walls, Cartagena’s old town is a maze of brightly painted colonial houses with bougainvillea spilling from wooden balconies.',
     stats: { population: '1M', region: 'Colombia', time: 'UTC−5', best: 'Dec–Apr' },
@@ -490,7 +491,7 @@ const cityData = [
     ]
   },
   {
-    id: 'santiago', country: 'south-america', nation: 'Chile', name: 'Santiago', local: '圣地亚哥',
+    id: 'santiago', country: 'south-america', nation: 'Chile', name: 'Santiago', local: '',
     tagline: 'A capital beneath the Andes',
     intro: 'Chile’s modern capital lies in a valley ringed by snow-capped Andes, with wine country and the Pacific coast both a short drive away.',
     stats: { population: '7M metro', region: 'Chile', time: 'UTC−4', best: 'Oct–Apr' },
@@ -503,7 +504,7 @@ const cityData = [
   },
   // Africa
   {
-    id: 'cape-town', country: 'africa', nation: 'South Africa', name: 'Cape Town', local: '开普敦',
+    id: 'cape-town', country: 'africa', nation: 'South Africa', name: 'Cape Town', local: 'Kaapstad', lang: 'af',
     tagline: 'Where mountain meets ocean',
     intro: 'Under flat-topped Table Mountain, Cape Town has dramatic beaches, penguin colonies and world-class vineyards on its doorstep.',
     stats: { population: '4.8M metro', region: 'South Africa', time: 'UTC+2', best: 'Nov–Mar' },
@@ -515,7 +516,7 @@ const cityData = [
     ]
   },
   {
-    id: 'marrakech', country: 'africa', nation: 'Morocco', name: 'Marrakech', local: '马拉喀什',
+    id: 'marrakech', country: 'africa', nation: 'Morocco', name: 'Marrakech', local: 'مراكش', lang: 'ar',
     tagline: 'The red city',
     intro: 'Behind its rose-coloured walls, Marrakech is a labyrinth of souks and riads centred on Jemaa el-Fnaa, with the Atlas Mountains on the horizon.',
     stats: { population: '1M', region: 'Morocco', time: 'UTC+1', best: 'Mar–May, Oct–Nov' },
@@ -527,7 +528,7 @@ const cityData = [
     ]
   },
   {
-    id: 'cairo', country: 'africa', nation: 'Egypt', name: 'Cairo', local: '开罗',
+    id: 'cairo', country: 'africa', nation: 'Egypt', name: 'Cairo', local: 'القاهرة', lang: 'ar',
     tagline: 'City of a thousand minarets',
     intro: 'Africa’s largest city spreads along the Nile, from the Pyramids of Giza and the Sphinx to the medieval mosques and bazaars of Islamic Cairo.',
     stats: { population: '10M', region: 'Egypt', time: 'UTC+2', best: 'Oct–Apr' },
@@ -539,7 +540,7 @@ const cityData = [
     ]
   },
   {
-    id: 'nairobi', country: 'africa', nation: 'Kenya', name: 'Nairobi', local: '内罗毕',
+    id: 'nairobi', country: 'africa', nation: 'Kenya', name: 'Nairobi', local: '',
     tagline: 'The safari capital',
     intro: 'Kenya’s capital is the only city in the world with a national park inside its borders — giraffes and zebras graze against the skyline.',
     stats: { population: '4.4M', region: 'Kenya', time: 'UTC+3', best: 'Jun–Oct' },
@@ -551,7 +552,7 @@ const cityData = [
     ]
   },
   {
-    id: 'zanzibar', country: 'africa', nation: 'Tanzania', name: 'Zanzibar', local: '桑给巴尔',
+    id: 'zanzibar', country: 'africa', nation: 'Tanzania', name: 'Zanzibar', local: 'زنجبار', lang: 'ar',
     tagline: 'The spice island',
     intro: 'Stone Town’s winding alleys, carved wooden doors and Swahili, Arab and Indian heritage meet white-sand beaches on the Indian Ocean.',
     stats: { population: '700K', region: 'Tanzania', time: 'UTC+3', best: 'Jun–Oct' },
@@ -563,7 +564,7 @@ const cityData = [
     ]
   },
   {
-    id: 'victoria-falls', country: 'africa', nation: 'Zimbabwe', name: 'Victoria Falls', local: '维多利亚瀑布',
+    id: 'victoria-falls', country: 'africa', nation: 'Zimbabwe', name: 'Victoria Falls', local: 'Mosi-oa-Tunya', lang: 'loz',
     tagline: 'The smoke that thunders',
     intro: 'On the Zambezi River between Zimbabwe and Zambia, Victoria Falls is the largest sheet of falling water in the world — its spray is visible for miles.',
     stats: { population: '35K', region: 'Zimbabwe', time: 'UTC+2', best: 'Feb–May' },

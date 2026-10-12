@@ -144,7 +144,10 @@ function cityItem(city, i) {
   const mark = visited.has(city.id) && !active
     ? '<span class="visited-mark" title="Visited"></span><span class="visually-hidden">(visited)</span>'
     : '';
-  return `<li style="--i:${i}"><button type="button" class="planet-item${active ? ' is-active' : ''}" data-city="${city.id}"${active ? ' aria-current="true"' : ''}><span class="planet-num" aria-hidden="true">${cityNumber(city)}</span><span>${esc(city.name)}</span><span class="item-local" lang="zh">${city.local}</span>${mark}</button></li>`;
+  const localTag = city.local && city.local !== city.name
+    ? `<span class="item-local"${city.lang ? ` lang="${city.lang}"` : ''}>${esc(city.local)}</span>`
+    : '';
+  return `<li style="--i:${i}"><button type="button" class="planet-item${active ? ' is-active' : ''}" data-city="${city.id}"${active ? ' aria-current="true"' : ''}><span class="planet-num" aria-hidden="true">${cityNumber(city)}</span><span>${esc(city.name)}</span>${localTag}${mark}</button></li>`;
 }
 
 function render() {
@@ -156,7 +159,10 @@ function render() {
   experience.dataset.city = current;
   document.title = `${city.name} — Travel City`;
   cityTitle.textContent = city.name;
-  cityKicker.innerHTML = `<span lang="zh">${city.local}</span> · ${esc(city.nation)} · ${esc(city.tagline)}`;
+  const kickerLead = city.local && city.local !== city.name
+    ? `<span${city.lang ? ` lang="${city.lang}"` : ''}>${esc(city.local)}</span> · `
+    : '';
+  cityKicker.innerHTML = `${kickerLead}${esc(city.nation)} · ${esc(city.tagline)}`;
   cityIntro.textContent = city.intro;
 
   nextName.textContent = next.name;
@@ -176,7 +182,7 @@ function render() {
 
   countryNav.innerHTML = countries
     .filter((c) => c.available)
-    .map((c) => `<button type="button" data-country="${c.id}" aria-pressed="${c.id === city.country}" title="${c.name} ${c.local}">${c.short}</button>`)
+    .map((c) => `<button type="button" data-country="${c.id}" aria-pressed="${c.id === city.country}" title="${[c.name, c.local].filter(Boolean).join(' ')}">${c.short}</button>`)
     .join('');
 
   const list = citiesOf(city.country);
@@ -185,21 +191,24 @@ function render() {
 
   drawerGroups.innerHTML = countries
     .map((c) => c.available
-      ? `<h3 class="eyebrow drawer-subhead">${c.name} <span lang="zh">${c.local}</span></h3><ol class="planet-items drawer-planets">${citiesOf(c.id).map(cityItem).join('')}</ol>`
-      : `<h3 class="eyebrow drawer-subhead">${c.name} <span class="soon-tag">Coming soon</span></h3>`)
+      ? `<h3 class="eyebrow drawer-subhead">${esc(c.name)}${c.local ? ` <span lang="zh">${esc(c.local)}</span>` : ''}</h3><ol class="planet-items drawer-planets">${citiesOf(c.id).map(cityItem).join('')}</ol>`
+      : `<h3 class="eyebrow drawer-subhead">${esc(c.name)} <span class="soon-tag">Coming soon</span></h3>`)
     .join('');
 
   destinationGroups.innerHTML = countries
     .map((c) => {
-      if (!c.available) return `<h3 class="group-title">${c.name} <span lang="zh">${c.local}</span> <span class="soon-tag">Coming soon</span></h3>`;
+      if (!c.available) return `<h3 class="group-title">${esc(c.name)}${c.local ? ` <span lang="zh">${esc(c.local)}</span>` : ''} <span class="soon-tag">Coming soon</span></h3>`;
       const cards = citiesOf(c.id).map((ci) => {
         const state = ci.id === current ? 'You are here' : visited.has(ci.id) ? 'Visited' : '';
+        const localTag = ci.local && ci.local !== ci.name
+          ? ` <span${ci.lang ? ` lang="${ci.lang}"` : ''}>${esc(ci.local)}</span>`
+          : '';
         return `<li><button type="button" class="city-card${ci.id === current ? ' is-current' : ''}" data-city="${ci.id}"${ci.id === current ? ' aria-current="true"' : ''}>
           <img src="${ci.photos[0].thumb}" alt="" loading="lazy" decoding="async" />
-          <span class="city-card-text"><span class="system-num">${cityNumber(ci)}</span><span class="system-name">${esc(ci.name)} <span lang="zh">${ci.local}</span></span><span class="system-state">${state || esc(ci.tagline)}</span></span>
+          <span class="city-card-text"><span class="system-num">${cityNumber(ci)}</span><span class="system-name">${esc(ci.name)}${localTag}</span><span class="system-state">${state || esc(ci.tagline)}</span></span>
         </button></li>`;
       }).join('');
-      return `<h3 class="group-title">${c.name} <span lang="zh">${c.local}</span></h3><ol class="system">${cards}</ol>`;
+      return `<h3 class="group-title">${esc(c.name)}${c.local ? ` <span lang="zh">${esc(c.local)}</span>` : ''}</h3><ol class="system">${cards}</ol>`;
     })
     .join('');
 
@@ -1061,8 +1070,11 @@ function renderSavedDialog() {
 
   const cityCards = list.cities.map((id) => {
     const c = byId[id];
+    const localSaved = c.local && c.local !== c.name
+      ? ` <span${c.lang ? ` lang="${c.lang}"` : ''}>${esc(c.local)}</span>`
+      : '';
     return `<li class="saved-item">
-      <button type="button" class="saved-go" data-city="${id}"><img src="${c.photos[0].thumb}" alt="" /><span><strong>${esc(c.name)}</strong> <span lang="zh">${c.local}</span><small>${esc(c.nation)}</small></span></button>
+      <button type="button" class="saved-go" data-city="${id}"><img src="${c.photos[0].thumb}" alt="" /><span><strong>${esc(c.name)}</strong>${localSaved}<small>${esc(c.nation)}</small></span></button>
       <a class="saved-link" href="${mapsUrlForCity(c)}" target="_blank" rel="noopener" aria-label="Open ${esc(c.name)} in Google Maps">Google Maps ↗</a>
       ${shared ? '' : `<button type="button" class="saved-remove" data-remove-city="${id}" aria-label="Remove ${esc(c.name)}">&times;</button>`}
     </li>`;
@@ -1164,7 +1176,7 @@ function renderQuiz() {
     + MONTHS.map((m, i) => chip('data-month', i, m, quiz.month === i)).join('');
   quizRegions.innerHTML = countries
     .filter((c) => c.available)
-    .map((c) => chip('data-region', c.id, esc(c.name), quiz.regions.includes(c.id), ` <span lang="zh">${c.local}</span>`))
+    .map((c) => chip('data-region', c.id, esc(c.name), quiz.regions.includes(c.id), c.local ? ` <span lang="zh">${esc(c.local)}</span>` : ''))
     .join('');
 
   const empty = !quiz.picks.length && quiz.month === null;
@@ -1177,7 +1189,7 @@ function renderQuiz() {
         <img src="${city.photos[0].thumb}" alt="" />
         <div class="quiz-result-text">
           <p class="quiz-rank">#${i + 1} · ${percent}% match</p>
-          <h4>${esc(city.name)} <span lang="zh">${city.local}</span> <small>${esc(city.nation)}</small></h4>
+          <h4>${esc(city.name)}${city.local && city.local !== city.name ? ` <span${city.lang ? ` lang="${city.lang}"` : ''}>${esc(city.local)}</span>` : ''} <small>${esc(city.nation)}</small></h4>
           <p class="quiz-reasons">${reasons.map(esc).join(' · ') || esc(city.tagline)}</p>
         </div>
         <div class="quiz-result-actions">
