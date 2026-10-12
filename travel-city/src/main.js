@@ -756,8 +756,10 @@ portal.addEventListener('click', () => {
   else navigate(neighbour(current, 1));
 });
 portalClose.addEventListener('click', () => setPortalDocked(true));
+$('#focus-exit').addEventListener('click', () => setPortalDocked(false));
 
-/* ---------- Docking the portal (tucks into the top-right so the photos are clear) ---------- */
+/* ---------- Focus mode: the portal tucks into the top-right, the list slides out left,
+   the guide slides out right and the city name shrinks into the bottom-left corner ---------- */
 
 const DOCK_KEY = 'travel-city:portal-docked';
 let portalDocked = false;
@@ -767,6 +769,7 @@ function setPortalDocked(docked) {
   portalDocked = docked;
   try { localStorage.setItem(DOCK_KEY, docked ? '1' : '0'); } catch {}
   experience.classList.toggle('portal-docked', docked);
+  applyFocusInert();
   customCursor.classList.remove('is-visible');
   targetX = 0;
   targetY = 0;
@@ -777,8 +780,17 @@ function setPortalDocked(docked) {
   portal.focus({ preventScroll: true });
 }
 
+// Off-screen panels must not be reachable by keyboard or screen reader while focused.
+function applyFocusInert() {
+  [cityListNav, factsPanel, $('#title-meta')].forEach((el) => { el.inert = portalDocked; });
+  const exit = $('#focus-exit');
+  exit.tabIndex = portalDocked ? 0 : -1;
+  exit.setAttribute('aria-hidden', String(!portalDocked));
+}
+
 experience.classList.toggle('portal-docked', portalDocked);
 dockMix = portalDocked ? 1 : 0;
+applyFocusInert();
 nextBtn.addEventListener('click', () => navigate(neighbour(current, 1)));
 prevBtn.addEventListener('click', () => navigate(neighbour(current, -1)));
 
@@ -809,6 +821,10 @@ function anyDialogOpen() {
 document.addEventListener('keydown', (e) => {
   if (anyDialogOpen() || e.altKey || e.ctrlKey || e.metaKey) return;
   if (e.target.closest('input, textarea, select, [contenteditable]')) return;
+  if (e.key === 'Escape' && portalDocked) {
+    setPortalDocked(false);
+    return;
+  }
   if (e.key === 'ArrowRight') {
     e.preventDefault();
     navigate(neighbour(current, 1));
